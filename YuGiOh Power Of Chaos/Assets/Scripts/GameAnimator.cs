@@ -23,6 +23,11 @@ namespace Assets.Scripts
             GameObject obj = Instantiate(handCard, player.HandPosition);
             obj.name = $"{player.ID}:{player_card._id}"; //hand Card (maybe add -h- in the middle to differenciate between played and hand cards)
 
+            if(player_card._faceup)
+                obj.GetComponent<SpriteRenderer>().sprite = Globals.Sprites[player_card._imageName];
+            else
+                obj.GetComponent<SpriteRenderer>().sprite = Globals.Sprites["card_ura"];
+
             if (obj != null)
                 player_card.Object = obj;
         }

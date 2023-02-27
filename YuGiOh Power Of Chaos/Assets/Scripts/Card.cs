@@ -14,7 +14,7 @@ namespace Assets.Scripts
         //ingame id (should be unique, this might be attributed when a card comes out of the deck)
         public Guid _id;
         //faceup/facedown
-        bool _faceup;
+        public bool _faceup;
         //attack/defense mode
         [JsonProperty("card_id")]
         public int _cardId; //id associates with the defacto card (image, etc)
@@ -44,6 +44,7 @@ namespace Assets.Scripts
         public string _imageName;
 
         public GameObject _prefab;
+        public PlayType _playType;
 
         public Card(int cardId, GameObject prefab)
         {
@@ -85,6 +86,15 @@ namespace Assets.Scripts
         public void Flip()
         {
             _faceup = !_faceup;
+            if (_faceup)
+                this.Object.GetComponent<SpriteRenderer>().sprite = Globals.Sprites[this._imageName];
+            else
+                this.Object.GetComponent<SpriteRenderer>().sprite = Globals.Sprites["card_ura"];
+        }
+
+        public Card Clone()
+        {
+            return new Card(this);
         }
     }
 }

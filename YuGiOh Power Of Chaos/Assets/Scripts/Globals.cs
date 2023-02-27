@@ -11,5 +11,9 @@ namespace Assets.Scripts
     {
         public static List<Card> AllCards = new List<Card>();
         public static Dictionary<string, Sprite> Sprites = new Dictionary<string, Sprite>();
+        public static Player p1;
+        public static Player cpu;
+        public static Dictionary<Guid, Card> p1_cards;
+        public static Dictionary<Guid, Card> cpu_cards;
     }
 }

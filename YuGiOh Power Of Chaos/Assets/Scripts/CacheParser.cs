@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -26,7 +27,11 @@ namespace Assets.Scripts
                 //Load parsed cards into deck
 
                 foreach (int id in card_ids)
-                    deck.Add((Card)Globals.AllCards.Where(x => x._cardId == id).FirstOrDefault());
+                {
+                    Card c = (Card)Globals.AllCards.Where(x => x._cardId == id).FirstOrDefault().Clone();
+                    c._id = Guid.NewGuid();
+                    deck.Add(c);
+                }
             }
 
             return deck;

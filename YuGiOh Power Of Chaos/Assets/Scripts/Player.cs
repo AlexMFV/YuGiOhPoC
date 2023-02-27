@@ -21,6 +21,7 @@ namespace Assets.Scripts
         private List<Card> _specialZone;
         private int _health;
         Transform handPos;
+        private bool _isBot;
 
         public int ID { get { return _playerId; } }
         public Hand Hand { get { return _hand; } set { _hand = value; } }
@@ -49,7 +50,7 @@ namespace Assets.Scripts
         //    return null;
         //}
 
-        public Card FindCard(Guid guid)
+        public Dictionary<Guid, Card> GetAllPlayerCards()
         {
             List<Card> allCards = new List<Card>();
             allCards.AddRange(_mainDeck);
@@ -60,7 +61,12 @@ namespace Assets.Scripts
             allCards.AddRange(_specialZone);
             allCards.AddRange(this._hand.GetCards());
 
-            return allCards.FirstOrDefault(x => x._id == guid);
+            Dictionary<Guid, Card> allCardsDict = new Dictionary<Guid, Card>();
+            foreach (Card card in allCards)
+                allCardsDict.Add(card._id, card);
+
+            return allCardsDict;
+            //return allCards.FirstOrDefault(x => x._id == guid);
         }
 
         public Player(int playerId, bool isBot = false)
@@ -74,6 +80,7 @@ namespace Assets.Scripts
             _monsterZone = new List<Card>();
             _specialZone = new List<Card>();
             _health = 8000;
+            _isBot = isBot;
 
             if(playerId == 1) //Player1
                 handPos = GameObject.Find("player1_hand").transform;
@@ -95,7 +102,8 @@ namespace Assets.Scripts
         {
             if (_mainDeck.Count > 0)
             {
-                Card card = new Card(_mainDeck[0]);
+                Card card = _mainDeck[0];
+                card._faceup = !this._isBot; //If bot then facedown, if player faceup (maybe use a different variable for played faceup/facedown)
                 _mainDeck.RemoveAt(0);
                 _hand.AddCard(card);
                 return card;
