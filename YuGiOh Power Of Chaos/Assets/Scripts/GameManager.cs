@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
             HandManager.ArrangeHand(Globals.p1);
             HandManager.ArrangeHand(Globals.cpu);
             ChangePlayer();
-            phase = GamePhase.DrawPhase;
+            phase = GamePhase.StandbyPhase;
         }
         //Draw 5 cards player 1
         //Draw 5 cards player 2

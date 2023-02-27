@@ -13,6 +13,10 @@ public class CursorManager : MonoBehaviour
     [SerializeField] Texture2D c_clicked;
     [SerializeField] GameObject c_clickAnimation;
 
+    [SerializeField] Texture2D c_summon;
+    [SerializeField] Texture2D c_activate;
+    [SerializeField] Texture2D c_fusion;
+
     //TMP Texts
     [SerializeField] TextMeshProUGUI tmp_title;
     [SerializeField] TextMeshProUGUI tmp_attributes;
@@ -28,6 +32,9 @@ public class CursorManager : MonoBehaviour
     bool isClicked = false;
     Vector3 offset;
     static RaycastHit2D hit;
+    static Card hitCard = null;
+    static bool isCardHit = false;
+    static bool isDefaultCursor = true;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +59,7 @@ public class CursorManager : MonoBehaviour
     {
         bool isHeldDown = Input.GetMouseButton(0);
 
-        if(isHeldDown && !isClicked)
+        if(isHeldDown && !isClicked && isDefaultCursor)
         {
             Cursor.SetCursor(c_clicked, offset, CursorMode.ForceSoftware);
             Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -65,44 +72,62 @@ public class CursorManager : MonoBehaviour
         {
             Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware);
             isClicked = false;
+            isDefaultCursor = true;
         }
     }
 
     void MouseHover()
     {
-        CardHover();
+        if (isCardHit)
+        {
+            CursorCardHover();
+            CardHover();
+        }
+        else
+        {
+            if (!isDefaultCursor)
+            {
+                Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware);
+                isDefaultCursor = true;
+            }
+        }
     }
 
     public void CardHover()
     {
-        if (hit.collider?.gameObject.tag == "Card")
+        //Only show description for faceup cards
+        if (hitCard._faceup || Globals.p1_cards.TryGetValue(hitCard._id, out Card x))
         {
-            //Instead of card sprite we should be getting the corresponding Card object and load the title and description also
-            string tag = hit.collider.gameObject.name;
-            Card card = GetCard(tag);
+            card_image.GetComponent<SpriteRenderer>().sprite = Globals.Sprites[hitCard._imageName];
+            card_title.text = hitCard._name;
+            string attribs = string.Join('/', hitCard._types.Select(x => char.ToUpperInvariant(x[0]) + x.Substring(1)).ToArray()) ?? "[No attribute]";
 
-            //Only show description for faceup cards
-            if (card != null && (card._faceup || Globals.p1_cards.TryGetValue(card._id, out Card x)))
-            {
-                card_image.GetComponent<SpriteRenderer>().sprite = Globals.Sprites[card._imageName];
-                card_title.text = card._name;
-                string attribs = string.Join('/', card._types.Select(x => char.ToUpperInvariant(x[0]) + x.Substring(1)).ToArray()) ?? "[No attribute]";
-
-                if (card._cardType != "monster" && card._cardType != "fusion")   //Later use enumerator instead
-                    ((RectTransform)card_attributes.GetComponent<RectTransform>()).gameObject.SetActive(false);
-                else
-                    ((RectTransform)card_attributes.GetComponent<RectTransform>()).gameObject.SetActive(true);
-
-                card_attributes.text = $"[{attribs}]";
-                card_description.text = card._description;
-            }
+            if (hitCard._cardType != "monster" && hitCard._cardType != "fusion")   //Later use enumerator instead
+                ((RectTransform)card_attributes.GetComponent<RectTransform>()).gameObject.SetActive(false);
             else
-            {
-                card_image.GetComponent<SpriteRenderer>().sprite = Globals.Sprites["card_ura"];
-                card_title.text = "";
-                card_attributes.text = "";
-                card_description.text = "";
-            }
+                ((RectTransform)card_attributes.GetComponent<RectTransform>()).gameObject.SetActive(true);
+
+            card_attributes.text = $"[{attribs}]";
+            card_description.text = hitCard._description;
+        }
+        else
+        {
+            card_image.GetComponent<SpriteRenderer>().sprite = Globals.Sprites["card_ura"];
+            card_title.text = "";
+            card_attributes.text = "";
+            card_description.text = "";
+        }
+    }
+
+    //Changes the cursor 
+    public void CursorCardHover()
+    {
+        switch (hitCard._playType)
+        {
+            case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); isDefaultCursor = false; break;
+            case PlayType.Fusion: Cursor.SetCursor(c_fusion, offset, CursorMode.ForceSoftware); isDefaultCursor = false; break;
+            case PlayType.Summon: Cursor.SetCursor(c_summon, offset, CursorMode.ForceSoftware); isDefaultCursor = false; break;
+            default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
         }
     }
 
@@ -111,6 +136,21 @@ public class CursorManager : MonoBehaviour
     void MouseRaycast()
     {
         hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        if (hit.collider?.gameObject.tag == "Card")
+        {
+            //Instead of card sprite we should be getting the corresponding Card object and load the title and description also
+            string tag = hit.collider.gameObject.name;
+            hitCard = GetCard(tag);
+
+            if (hitCard != null)
+                isCardHit = true;
+        }
+        else
+        {
+            hitCard = null;
+            isCardHit = false;
+        }
     }
 
     Card GetCard(string prefabTag)

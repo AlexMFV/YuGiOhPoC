@@ -475,6 +475,9 @@ MonoBehaviour:
   c_default: {fileID: 2800000, guid: 43a73b319ec34f748a8dd6870d39d40a, type: 3}
   c_clicked: {fileID: 2800000, guid: c34c5ae420fd83545bc291f4b2a0828b, type: 3}
   c_clickAnimation: {fileID: 9192109903385153641, guid: 17174cc5fe3a5c54b89821100ed3d70f, type: 3}
+  c_summon: {fileID: 2800000, guid: e61f659248a1e6844b7d29b894c76fe7, type: 3}
+  c_activate: {fileID: 2800000, guid: 48bdec0da478a7349a42a9de5a04537d, type: 3}
+  c_fusion: {fileID: 2800000, guid: 020fe4d4cf8b48f42acb53b091401a1b, type: 3}
   tmp_title: {fileID: 1930135390}
   tmp_attributes: {fileID: 488746253}
   tmp_description: {fileID: 250509426}
