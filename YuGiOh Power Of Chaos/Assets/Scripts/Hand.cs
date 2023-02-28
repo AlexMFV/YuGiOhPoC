@@ -35,6 +35,11 @@ namespace Assets.Scripts
         {
             return _cardsInHand;
         }
+        
+        public void Discard(Guid id)
+        {
+            _cardsInHand.RemoveAll(x => x._id == id);
+        }
 
         public Card GetCard(Guid id)
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviour
             {
                 case GamePhase.GameStart: GameStart(); break;
                 case GamePhase.StandbyPhase: StandbyPhase(); break;
-                case GamePhase.MainPhase1: break;
+                case GamePhase.MainPhase1: MainPhase1(); break;
                 case GamePhase.BattlePhase: break;
                 case GamePhase.BP_BattleStep: break;
                 case GamePhase.BP_DamageStep: break;
@@ -162,6 +163,39 @@ public class GameManager : MonoBehaviour
                     case "fusion": card._playType = PlayType.Fusion; break;
                 }
             }
+        }
+        
+        phase = GamePhase.MainPhase1;
+    }
+
+    static void MainPhase1()
+    {
+        if (curr_player == Globals.p1.ID)
+        {
+            //Player
+            //If a card is hit and the user presses the button
+            if(Input.GetMouseButtonDown(0) && Globals.isCardHit)
+            {
+                Card pressedCard = Globals.p1.Hand.GetCard(Globals.hitCard._id);
+
+                //And if the card belongs to the player
+                if (pressedCard != null)
+                {
+                    Card card = Globals.p1.PlayCard(pressedCard._id);
+
+                    if (Globals.p1.CanPlayCard(card))
+                    {
+                        Destroy(card.Object);
+                        GameAnimator.InstatiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
+                        HandManager.ArrangeHand(Globals.p1);
+                        timer.Wait(200);
+                    }
+                }
+            }
+        }
+        else
+        {
+            //Bot
         }
     }
     

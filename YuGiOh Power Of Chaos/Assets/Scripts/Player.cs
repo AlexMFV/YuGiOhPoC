@@ -114,5 +114,53 @@ namespace Assets.Scripts
             }
             return null;
         }
+
+        internal Card PlayCard(Guid id)
+        {
+            Card card = this.Hand.GetCard(id); //Get the card to remove from the hand
+
+            //If card is monster/fusion, move it to the monster zone
+            //If card is special move it to the special zone
+            if (card._cardType == "monster" || card._cardType == "fusion")
+                _monsterZone.Add(card);
+            else
+                _specialZone.Add(card);
+
+            this.Hand.Discard(id); //Remove from hand
+                                   //Check if card is removed
+            return card;
+        }
+
+        internal Transform GetCardPosition(Card card)
+        {
+            if(card._cardType == "monster" || card._cardType == "fusion")
+            {
+                if(_monsterZone.Count() <= 5)
+                    return GameObject.Find("p_normal" + (_monsterZone.Count())).transform;
+            }
+            else
+            {
+                if (_specialZone.Count() <= 5)
+                    return GameObject.Find("p_special" + (_specialZone.Count())).transform;
+            }
+
+            return null;
+        }
+
+        internal bool CanPlayCard(Card card)
+        {
+            if (card._cardType == "monster" || card._cardType == "fusion")
+            {
+                if (_monsterZone.Count() < 5)
+                    return true;
+            }
+            else
+            {
+                if (_specialZone.Count() < 5)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
