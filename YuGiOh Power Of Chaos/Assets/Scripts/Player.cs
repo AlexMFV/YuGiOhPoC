@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    internal class Player
+    public class Player
     {
         //0: bottom (self), 1: top (other/AI)
         private int _playerId;
@@ -122,7 +122,12 @@ namespace Assets.Scripts
             //If card is monster/fusion, move it to the monster zone
             //If card is special move it to the special zone
             if (card._cardType == "monster" || card._cardType == "fusion")
-                _monsterZone.Add(card);
+            {
+                if (Globals.canPlayCard)
+                    _monsterZone.Add(card);
+                else
+                    return null;
+            }
             else
                 _specialZone.Add(card);
 
@@ -149,10 +154,19 @@ namespace Assets.Scripts
 
         internal bool CanPlayCard(Card card)
         {
+            if (card == null)
+                return false;
+            
             if (card._cardType == "monster" || card._cardType == "fusion")
             {
-                if (_monsterZone.Count() < 5)
-                    return true;
+                if (Globals.canPlayCard) //(Globals.currentPhase == GamePhase.MainPhase1 || Globals.currentPhase == GamePhase.MainPhase2) && 
+                {
+                    if (_monsterZone.Count() < 5)
+                    {
+                        Globals.canPlayCard = false;
+                        return true;
+                    }
+                }
             }
             else
             {

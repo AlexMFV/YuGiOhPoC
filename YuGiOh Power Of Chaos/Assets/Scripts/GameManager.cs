@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    static GamePhase phase;
     public static bool shouldRun = true;
     static GameTimer timer;
     static BoardManager board;
@@ -19,7 +18,7 @@ public class GameManager : MonoBehaviour
     static int curr_player = -1;
 
     static bool firstRun = true;
-    static bool debug = false;
+    static bool debug = true;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
         Globals.p1_cards = Globals.p1.GetAllPlayerCards(); //Loads all the cards for ease of access
         Globals.cpu_cards = Globals.cpu.GetAllPlayerCards();
 
-        phase = GamePhase.GameStart;
+        Globals.currentPhase = GamePhase.GameStart;
     }
 
     // Update is called once per frame
@@ -61,8 +60,12 @@ public class GameManager : MonoBehaviour
     {
         if (debug && firstRun)
         {
-            foreach (Transform t in board.allpositions)
-                GameAnimator.InstatiatePlayedCard(Globals.p1, Globals.p1.Deck[0], t);
+            //foreach (Transform t in board.allpositions)
+            //    GameAnimator.InstatiatePlayedCard(Globals.p1, Globals.p1.Deck[0], t);
+
+            int attack = 1000;
+            int def = 450;
+            GameObject obg = TextManager.TakeDamage(Globals.p1, (attack-def)*-1);
 
             timer.Wait(400);
             firstRun = false;
@@ -70,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (shouldRun)
         {
-            switch (phase)
+            switch (Globals.currentPhase)
             {
                 case GamePhase.GameStart: GameStart(); break;
                 case GamePhase.StandbyPhase: StandbyPhase(); break;
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
             HandManager.ArrangeHand(Globals.p1);
             HandManager.ArrangeHand(Globals.cpu);
             ChangePlayer();
-            phase = GamePhase.StandbyPhase;
+            Globals.currentPhase = GamePhase.StandbyPhase;
         }
         //Draw 5 cards player 1
         //Draw 5 cards player 2
@@ -142,10 +145,10 @@ public class GameManager : MonoBehaviour
                 //Mark each card as playable and which play type or not
                 switch (card._cardType)
                 {
-                    case "monster": card._playType = PlayType.Summon; break;
+                    case "monster": card.PlayType = PlayType.Summon; break;
                     case "spell": //Spell
-                    case "normal": card._playType = PlayType.Activate; break; //Spell
-                    case "fusion": card._playType = PlayType.Fusion; break;
+                    case "normal": card.PlayType = PlayType.Activate; break; //Spell
+                    case "fusion": card.PlayType = PlayType.Fusion; break;
                 }
             }
         }
@@ -157,15 +160,16 @@ public class GameManager : MonoBehaviour
                 //Mark each card as playable and which play type or not
                 switch (card._cardType)
                 {
-                    case "monster": card._playType = PlayType.Summon; break;
+                    case "monster": card.PlayType = PlayType.Summon; break;
                     case "spell": //Spell
-                    case "normal": card._playType = PlayType.Activate; break; //Spell
-                    case "fusion": card._playType = PlayType.Fusion; break;
+                    case "normal": card.PlayType = PlayType.Activate; break; //Spell
+                    case "fusion": card.PlayType = PlayType.Fusion; break;
                 }
             }
         }
-        
-        phase = GamePhase.MainPhase1;
+
+        Globals.currentPhase = GamePhase.MainPhase1;
+        Globals.canPlayCard = true;
     }
 
     static void MainPhase1()
@@ -188,7 +192,6 @@ public class GameManager : MonoBehaviour
                         Destroy(card.Object);
                         GameAnimator.InstatiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
                         HandManager.ArrangeHand(Globals.p1);
-                        timer.Wait(200);
                     }
                 }
             }
@@ -202,6 +205,6 @@ public class GameManager : MonoBehaviour
     static void EndPhase()
     {
         ChangePlayer();
-        phase = GamePhase.DrawPhase;
+        Globals.currentPhase = GamePhase.DrawPhase;
     }
 }

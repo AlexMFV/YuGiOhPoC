@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    internal class Hand
+    public class Hand
     {
         private List<Card> _cardsInHand;
 

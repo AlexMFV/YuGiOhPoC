@@ -122,12 +122,23 @@ public class CursorManager : MonoBehaviour
     //Changes the cursor 
     public void CursorCardHover()
     {
-        switch (Globals.hitCard._playType)
+        if (Globals.canPlayCard)
         {
-            case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-            case PlayType.Fusion: Cursor.SetCursor(c_fusion, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-            case PlayType.Summon: Cursor.SetCursor(c_summon, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-            default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+            switch (Globals.hitCard.PlayType)
+            {
+                case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                case PlayType.Fusion: Cursor.SetCursor(c_fusion, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                case PlayType.Summon: Cursor.SetCursor(c_summon, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+            }
+        }
+        else
+        {
+            switch (Globals.hitCard.PlayType)
+            {
+                case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+            }
         }
     }
     

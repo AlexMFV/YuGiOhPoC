@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -42,8 +45,32 @@ namespace Assets.Scripts
             else
                 obj.GetComponent<SpriteRenderer>().sprite = Globals.Sprites["card_ura"];
 
+            if(player_card._cardType == "monster" || player_card._cardType == "fusion")
+                CreateAttackDefenseLabel(player_card, position);
+
             if (obj != null)
                 player_card.Object = obj;
+        }
+        
+        internal static void CreateAttackDefenseLabel(Card card, Transform trans)
+        {
+            TextMeshPro meshPro = new TextMeshPro();
+            TextMesh mesh = new TextMesh();
+            
+            Vector3 newPos = trans.position;
+            newPos.y -= 0.84f;
+            newPos.z = 0f;
+
+            GameObject txtobj = new GameObject($"label-{card._id}");
+            txtobj.transform.SetParent(trans);
+            txtobj.transform.position = newPos;
+            TextMeshPro label = txtobj.AddComponent<TextMeshPro>();
+            label.text = $"{card._attack}/{card._defense}";
+            label.fontSize = 5;
+            label.transform.localScale = new Vector3(.5f, .5f, .5f);
+            label.fontStyle = FontStyles.Bold;
+            label.horizontalAlignment = HorizontalAlignmentOptions.Center;
+            label.verticalAlignment = VerticalAlignmentOptions.Middle;
         }
     }
 }

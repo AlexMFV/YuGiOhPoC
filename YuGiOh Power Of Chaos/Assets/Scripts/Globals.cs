@@ -22,5 +22,8 @@ namespace Assets.Scripts
         public static bool isCardHit = false;
         public static bool isDefaultCursor = true;
         public static bool isPlayedCard = false;
+
+        public static GamePhase currentPhase = GamePhase.GameStart;
+        public static bool canPlayCard = true;
     }
 }

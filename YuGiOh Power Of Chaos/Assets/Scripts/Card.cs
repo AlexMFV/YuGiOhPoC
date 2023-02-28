@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    internal class Card
+    public class Card
     {
         //ingame id (should be unique, this might be attributed when a card comes out of the deck)
         public Guid _id;
@@ -82,6 +82,7 @@ namespace Assets.Scripts
         }
 
         public GameObject Object { get { return _prefab; } set { _prefab = value; } }
+        public PlayType PlayType { get { return _playType; } set { _playType = value; } }
 
         public void Flip()
         {

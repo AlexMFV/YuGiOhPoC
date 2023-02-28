@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
-    internal enum PlayType
+    public enum PlayType
     {
         NotPlayable,
         Summon, //Or set if the player presses the right mouse button
