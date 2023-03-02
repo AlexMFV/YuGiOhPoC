@@ -20,9 +20,12 @@ public class GameManager : MonoBehaviour
     static bool firstRun = true;
     static bool debug = true;
 
+    static SoundManager sound;
+
     // Start is called before the first frame update
     void Start()
-    {        
+    {
+        sound = Camera.main.GetComponent<SoundManager>();
         board = new BoardManager();
         timer = new GameTimer();
 
@@ -76,6 +79,7 @@ public class GameManager : MonoBehaviour
             switch (Globals.currentPhase)
             {
                 case GamePhase.GameStart: GameStart(); break;
+                case GamePhase.DrawPhase: break;
                 case GamePhase.StandbyPhase: StandbyPhase(); break;
                 case GamePhase.MainPhase1: MainPhase1(); break;
                 case GamePhase.BattlePhase: break;
@@ -107,8 +111,9 @@ public class GameManager : MonoBehaviour
             if (Globals.p1.Hand.GetCardCount() < 5)
             {
                 GameAnimator.InstatiateCard(Globals.p1, Globals.p1.DrawCard());
+                sound.DrawCard();
                 HandManager.ArrangeHand(Globals.p1);
-                timer.Wait(400);
+                timer.Wait(350);
             }
             else
                 ChangePlayer();
@@ -118,8 +123,9 @@ public class GameManager : MonoBehaviour
             if (curr_player == Globals.cpu?.ID && Globals.cpu.Hand.GetCardCount() < 5)
             {
                 GameAnimator.InstatiateCard(Globals.cpu, Globals.cpu.DrawCard());
+                sound.DrawCard();
                 HandManager.ArrangeHand(Globals.cpu);
-                timer.Wait(400);
+                timer.Wait(350);
             }
         }
 
@@ -191,6 +197,7 @@ public class GameManager : MonoBehaviour
                     {
                         Destroy(card.Object);
                         GameAnimator.InstatiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
+                        sound.PlayCard();
                         HandManager.ArrangeHand(Globals.p1);
                     }
                 }
