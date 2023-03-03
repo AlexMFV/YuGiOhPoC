@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     static int curr_player = -1;
 
     static bool firstRun = true;
-    static bool debug = true;
+    static bool debug = false;
 
     static SoundManager sound;
 
@@ -63,12 +63,15 @@ public class GameManager : MonoBehaviour
     {
         if (debug && firstRun)
         {
+            //Show all card spots
             //foreach (Transform t in board.allpositions)
             //    GameAnimator.InstatiatePlayedCard(Globals.p1, Globals.p1.Deck[0], t);
 
-            int attack = 1000;
-            int def = 450;
-            GameObject obg = TextManager.TakeDamage(Globals.p1, (attack-def)*-1);
+            //Testing with damage text
+            //int attack = 3000;
+            //int def = 450;
+            //GameObject obj = TextManager.TakeDamage(Globals.p1, (attack-def)*-1);
+            //GameObject obj2 = TextManager.TakeDamage(Globals.cpu, (attack-def)*-1);
 
             timer.Wait(400);
             firstRun = false;
