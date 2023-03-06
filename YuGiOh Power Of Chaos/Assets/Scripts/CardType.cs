@@ -23,7 +23,7 @@ namespace Assets.Scripts
     {
         Fusion,     //F
         Effect,     //E
-        Once,       //O
+        Single,     //S
         Continuous  //C
     }
 }

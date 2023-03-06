@@ -40,6 +40,18 @@ namespace Assets.Scripts
             GameObject obj = Instantiate(playedCard, position.transform);
             obj.name = $"{player.ID}:{player_card._id}"; //played Card (maybe add -p- in the middle to differenciate)
 
+            if(player_card._cardType == "trap")
+                player_card._faceup = false;
+
+            if (player_card.isSet)
+            {
+                if (player_card._cardType == "monster" || player_card._cardType == "fusion")
+                    obj.transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
+                
+                player_card._faceup = false;
+            }
+            
+            
             if (player_card._faceup)
                 obj.GetComponent<SpriteRenderer>().sprite = Globals.Sprites[player_card._imageName];
             else

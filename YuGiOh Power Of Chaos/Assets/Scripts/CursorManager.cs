@@ -14,6 +14,7 @@ public class CursorManager : MonoBehaviour
     [SerializeField] GameObject c_clickAnimation;
 
     [SerializeField] Texture2D c_summon;
+    [SerializeField] Texture2D c_set;
     [SerializeField] Texture2D c_activate;
     [SerializeField] Texture2D c_fusion;
 
@@ -31,6 +32,7 @@ public class CursorManager : MonoBehaviour
 
     bool isClicked = false;
     Vector3 offset;
+    List<CursorType> cursors;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,7 @@ public class CursorManager : MonoBehaviour
 
     void MouseClicked()
     {
-        bool isHeldDown = Input.GetMouseButton(0);
+        bool isHeldDown = Input.GetMouseButton(0);      //Left Click
 
         if(isHeldDown && !isClicked && Globals.isDefaultCursor)
         {
@@ -95,6 +97,9 @@ public class CursorManager : MonoBehaviour
 
     public void CardHover()
     {
+        //CHANGES: Maybe for card hover during Standby Phase and processing of the Hand create a List that goes through all the cards in the hand
+        //and adds to the list the cursor it should show, then during hover it goes through the list and shows the cursor that is in the list.
+
         //Only show description for faceup cards
         if (Globals.hitCard._faceup || Globals.p1_cards.TryGetValue(Globals.hitCard._id, out Card x))
         {
@@ -124,21 +129,46 @@ public class CursorManager : MonoBehaviour
     {
         if (Globals.canPlayCard)
         {
-            switch (Globals.hitCard.PlayType)
+            if (!Globals.hitCard.isSet)
             {
-                case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-                case PlayType.Fusion: Cursor.SetCursor(c_fusion, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-                case PlayType.Summon: Cursor.SetCursor(c_summon, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-                default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+                switch (Globals.hitCard.PlayType)
+                {
+                    case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                    case PlayType.Fusion: Cursor.SetCursor(c_fusion, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                    case PlayType.Summon: Cursor.SetCursor(c_summon, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                    case PlayType.Set: Cursor.SetCursor(c_set, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                    default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+                }
+            }
+            else
+            {
+                if (Globals.hitCard._cardType == "monster" && Helpers.checkStarRating(Globals.p1, Globals.hitCard) == PlayType.Summon)
+                {
+                    Cursor.SetCursor(c_set, offset, CursorMode.ForceSoftware);
+                    Globals.isDefaultCursor = false;
+                }
             }
         }
         else
         {
-            switch (Globals.hitCard.PlayType)
+            if (Globals.hitCard._cardType == "spell" || Globals.hitCard._cardType == "trap")
             {
-                case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
-                default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+                if (!Globals.hitCard.isSet)
+                {
+                    switch (Globals.hitCard.PlayType)
+                    {
+                        case PlayType.Activate: Cursor.SetCursor(c_activate, offset, CursorMode.ForceSoftware); Globals.isDefaultCursor = false; break;
+                        default: Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware); break;
+                    }
+                }
+                else
+                {
+                    Cursor.SetCursor(c_set, offset, CursorMode.ForceSoftware);
+                    Globals.isDefaultCursor = false;
+                }
             }
+            else
+                Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware);
         }
     }
     
@@ -156,7 +186,11 @@ public class CursorManager : MonoBehaviour
             
             //Instead of card sprite we should be getting the corresponding Card object and load the title and description also
             string tag = Globals.hit.collider.gameObject.name;
+            Card prevHit = Globals.hitCard;
             Globals.hitCard = GetCard(tag);
+
+            if (prevHit != Globals.hitCard)
+                Globals.p1.Hand.ClearSet();
 
             if (Globals.hitCard != null)
                 Globals.isCardHit = true;
@@ -164,6 +198,7 @@ public class CursorManager : MonoBehaviour
         else
         {
             Globals.hitCard = null;
+            Globals.p1.Hand.ClearSet();
             Globals.isCardHit = false;
         }
     }
@@ -195,6 +230,23 @@ public class CursorManager : MonoBehaviour
         card_attributes = tmp_attributes;
         card_description = tmp_description;
         card_image = image_card;
+    }
+
+    public enum CursorType
+    {
+        DEFAULT,
+        SUMMON,
+        SET,
+        DRAW,
+        FUSION,
+        ACTIVATE,
+        ATTACK,
+        SURRENDER,
+        FLIP_SUMMON,
+        ERROR,
+        REVERSE,
+        ATTACK_POSITION,
+        DEFENSE_POSITION
     }
 
     #endregion

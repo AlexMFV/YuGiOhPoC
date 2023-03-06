@@ -21,10 +21,15 @@ public class GameManager : MonoBehaviour
     static bool debug = false;
 
     static SoundManager sound;
+    static GameObject phaseObj;
+    static GameObject deckCountObj;
 
     // Start is called before the first frame update
     void Start()
     {
+        phaseObj = GameObject.Find("Phase");
+        deckCountObj = GameObject.Find("Deck_Count");
+        
         sound = Camera.main.GetComponent<SoundManager>();
         board = new BoardManager();
         timer = new GameTimer();
@@ -39,6 +44,7 @@ public class GameManager : MonoBehaviour
         //Play Jakenpo (Rock paper scissors) to see who goes first
         curr_player = Globals.p1.ID; //Player 1 goes first
         //^^^^^^^^ TEMPORARY^^^^^^^^
+        //CHANGE THE CURR_PLAYER TO USE THE REFERENCE OF THE PLAYER INSTEAD OF THE ID (EASIER TO ACESS AN REDUCE REUSED CODE)
 
         //Preload the player Decks
         //This can be done from a fileinside the player computer
@@ -61,6 +67,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdatePhase();
+        UpdateDeckCount();
+
         if (debug && firstRun)
         {
             //Show all card spots
@@ -82,14 +91,14 @@ public class GameManager : MonoBehaviour
             switch (Globals.currentPhase)
             {
                 case GamePhase.GameStart: GameStart(); break;
-                case GamePhase.DrawPhase: break;
+                case GamePhase.DrawPhase: DrawPhase(); break;
                 case GamePhase.StandbyPhase: StandbyPhase(); break;
                 case GamePhase.MainPhase1: MainPhase1(); break;
-                case GamePhase.BattlePhase: break;
-                case GamePhase.BP_BattleStep: break;
-                case GamePhase.BP_DamageStep: break;
-                case GamePhase.BP_EndStep: break;
-                case GamePhase.MainPhase2: break;
+                case GamePhase.BattlePhase: BattlePhase(); break;
+                case GamePhase.BP_BattleStep: BattleStep(); break;
+                case GamePhase.BP_DamageStep: DamageStep(); break;
+                case GamePhase.BP_EndStep: EndStep(); break;
+                case GamePhase.MainPhase2: MainPhase2();  break;
                 case GamePhase.EndPhase: EndPhase(); break;
             }
         }
@@ -99,8 +108,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    static void UpdatePhase()
+    {
+        TextMeshProUGUI text = phaseObj.GetComponent<TextMeshProUGUI>();
+        text.text = Enum.GetName(typeof(GamePhase), Globals.currentPhase);
+    }
+    
+    static void UpdateDeckCount()
+    {
+        TextMeshProUGUI text = deckCountObj.GetComponent<TextMeshProUGUI>();
+        text.text = Globals.p1.Deck.Count().ToString();
+    }
+
     static void ChangePlayer()
     {
+        timer.Wait(100);
+        
         if (curr_player == Globals.p1.ID)
             curr_player = Globals.cpu.ID;
         else
@@ -130,6 +153,8 @@ public class GameManager : MonoBehaviour
                 HandManager.ArrangeHand(Globals.cpu);
                 timer.Wait(350);
             }
+            else
+                ChangePlayer();
         }
 
         if (Globals.p1?.Hand.GetCardCount() == 5 && Globals.cpu?.Hand.GetCardCount() == 5)
@@ -137,52 +162,76 @@ public class GameManager : MonoBehaviour
             HandManager.ArrangeHand(Globals.p1);
             HandManager.ArrangeHand(Globals.cpu);
             ChangePlayer();
-            Globals.currentPhase = GamePhase.StandbyPhase;
+            Globals.currentPhase = GamePhase.DrawPhase;
+            timer.Wait(1000);
         }
-        //Draw 5 cards player 1
-        //Draw 5 cards player 2
+    }
+
+    static void DrawPhase()
+    {
+        Player player;
+        if (curr_player == Globals.p1.ID)
+            player = Globals.p1;
+        else
+            player = Globals.cpu;
+        
+        GameAnimator.InstatiateCard(player, player.DrawCard());
+        sound.DrawCard();
+        HandManager.ArrangeHand(player);
+
+        Globals.currentPhase = GamePhase.StandbyPhase;
+        timer.Wait(500);
     }
 
     static void StandbyPhase()
     {
+        Player player;
+        Globals.canPlayCard = true;
+
         //Process the cards the current player can play (maybe process both players since there are cards that can be activated during DamageStep)
-        if(curr_player == Globals.p1.ID)
-        {
-            //Add to new method and call it (repeating code)
-            foreach(Card card in Globals.p1.Hand.GetCards())
-            {
-                //Mark each card as playable and which play type or not
-                switch (card._cardType)
-                {
-                    case "monster": card.PlayType = PlayType.Summon; break;
-                    case "spell": //Spell
-                    case "normal": card.PlayType = PlayType.Activate; break; //Spell
-                    case "fusion": card.PlayType = PlayType.Fusion; break;
-                }
-            }
-        }
+        if (curr_player == Globals.p1.ID)
+            player = Globals.p1;
         else
+            player = Globals.cpu;
+
+        //Add to new method and call it (repeating code)
+        foreach (Card card in player.Hand.GetCards())
         {
-            foreach (Card card in Globals.cpu.Hand.GetCards())
+            ////Mark each card as playable and which play type or not
+            //switch (card._cardType)
+            //{
+            //    case "monster": card.PlayType = PlayType.Summon; break;
+            //    case "spell": //Spell
+            //    case "normal": card.PlayType = PlayType.Activate; break; //Spell
+            //    case "fusion": card.PlayType = PlayType.Fusion; break;
+            //}
+
+
+            if (card._cardType == "monster")
             {
-                //Mark each card as playable and which play type or not
-                //Mark each card as playable and which play type or not
-                switch (card._cardType)
-                {
-                    case "monster": card.PlayType = PlayType.Summon; break;
-                    case "spell": //Spell
-                    case "normal": card.PlayType = PlayType.Activate; break; //Spell
-                    case "fusion": card.PlayType = PlayType.Fusion; break;
-                }
+                card.PlayType = Helpers.checkStarRating(player, card);
+            }
+
+            if(card._cardType == "spell")
+            {
+                card.PlayType = Helpers.checkSpellType(player, card);
+            }
+
+            if(card._cardType == "trap")
+            {
+                card.PlayType = Helpers.checkTrapType(player, card);
             }
         }
 
         Globals.currentPhase = GamePhase.MainPhase1;
-        Globals.canPlayCard = true;
+        //Globals.canPlayCard = true;
     }
 
     static void MainPhase1()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.BattlePhase;
+
         if (curr_player == Globals.p1.ID)
         {
             //Player
@@ -194,15 +243,29 @@ public class GameManager : MonoBehaviour
                 //And if the card belongs to the player
                 if (pressedCard != null)
                 {
-                    Card card = Globals.p1.PlayCard(pressedCard._id);
-
-                    if (Globals.p1.CanPlayCard(card))
+                    if (Globals.p1.CanPlayCard(pressedCard) && pressedCard.PlayType != PlayType.NotPlayable)
                     {
-                        Destroy(card.Object);
-                        GameAnimator.InstatiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
-                        sound.PlayCard();
-                        HandManager.ArrangeHand(Globals.p1);
+                        Card card = Globals.p1.PlayCard(pressedCard._id);
+
+                        if (card != null)
+                        {
+                            if (card._cardType != "spell" && card._cardType != "trap")
+                                Globals.canPlayCard = false;
+
+                            Destroy(card.Object);
+                            GameAnimator.InstatiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
+                            sound.PlayCard();
+                            HandManager.ArrangeHand(Globals.p1);
+                        }
                     }
+                }
+            }
+            else
+            {
+                if(Input.GetMouseButtonDown(1) && Globals.isCardHit)
+                {
+                    Globals.hitCard.isSet = !Globals.hitCard.isSet;
+                    Globals.isDefaultCursor = false;
                 }
             }
         }
@@ -210,6 +273,36 @@ public class GameManager : MonoBehaviour
         {
             //Bot
         }
+    }
+
+    void BattlePhase()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.BP_BattleStep;
+    }
+
+    void BattleStep()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.BP_DamageStep;
+    }
+
+    void DamageStep()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.BP_EndStep;
+    }
+
+    void EndStep()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.MainPhase2;
+    }
+
+    void MainPhase2()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.EndPhase;
     }
     
     static void EndPhase()

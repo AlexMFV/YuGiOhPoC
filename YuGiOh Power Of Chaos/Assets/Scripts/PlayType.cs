@@ -11,6 +11,7 @@ namespace Assets.Scripts
         NotPlayable,
         Summon, //Or set if the player presses the right mouse button
         Activate,
-        Fusion
+        Fusion,
+        Set
     }
 }

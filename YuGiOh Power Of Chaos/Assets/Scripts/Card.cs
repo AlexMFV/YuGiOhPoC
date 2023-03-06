@@ -45,6 +45,7 @@ namespace Assets.Scripts
 
         public GameObject _prefab;
         public PlayType _playType;
+        public bool isSet;
 
         public Card(int cardId, GameObject prefab)
         {

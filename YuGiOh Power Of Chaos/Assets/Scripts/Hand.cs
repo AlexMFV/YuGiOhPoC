@@ -59,5 +59,10 @@ namespace Assets.Scripts
             get { return (Card)_cardsInHand[index]; }
             set { _cardsInHand[index] = value; }
         }
+
+        public void ClearSet()
+        {
+            _cardsInHand.ForEach(x => x.isSet = false);
+        }
     }
 }

@@ -30,7 +30,10 @@ namespace Assets.Scripts
                 {
                     Card c = (Card)Globals.AllCards.Where(x => x._cardId == id).FirstOrDefault().Clone();
                     c._id = Guid.NewGuid();
-                    deck.Add(c);
+
+                    //Do not load the card if its a fusion card (these go in the fusion deck on the left side of the field)
+                    if (c._cardType != "fusion")
+                        deck.Add(c);
                 }
             }
 

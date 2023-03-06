@@ -82,7 +82,7 @@ namespace Assets.Scripts
             _health = 8000;
             _isBot = isBot;
 
-            if(playerId == 1) //Player1
+            if (playerId == 1) //Player1
                 handPos = GameObject.Find("player1_hand").transform;
             else
                 handPos = GameObject.Find("player2_hand").transform;
@@ -138,9 +138,9 @@ namespace Assets.Scripts
 
         internal Transform GetCardPosition(Card card)
         {
-            if(card._cardType == "monster" || card._cardType == "fusion")
+            if (card._cardType == "monster" || card._cardType == "fusion")
             {
-                if(_monsterZone.Count() <= 5)
+                if (_monsterZone.Count() <= 5)
                     return GameObject.Find("p_normal" + (_monsterZone.Count())).transform;
             }
             else
@@ -156,17 +156,14 @@ namespace Assets.Scripts
         {
             if (card == null)
                 return false;
-            
+
             if (card._cardType == "monster" || card._cardType == "fusion")
             {
-                if (Globals.canPlayCard) //(Globals.currentPhase == GamePhase.MainPhase1 || Globals.currentPhase == GamePhase.MainPhase2) && 
-                {
-                    if (_monsterZone.Count() < 5)
-                    {
-                        Globals.canPlayCard = false;
-                        return true;
-                    }
-                }
+                //if (Globals.canPlayCard) //(Globals.currentPhase == GamePhase.MainPhase1 || Globals.currentPhase == GamePhase.MainPhase2) && 
+                //{
+                if (_monsterZone.Count() < 5)
+                    return true;
+                //}
             }
             else
             {
@@ -175,6 +172,16 @@ namespace Assets.Scripts
             }
 
             return false;
+        }
+
+        internal int MonstersCount()
+        {
+            return _monsterZone.Count();
+        }
+
+        internal int SpecialsCount()
+        {
+            return _specialZone.Count();
         }
     }
 }

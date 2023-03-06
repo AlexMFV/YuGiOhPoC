@@ -546,7 +546,7 @@
     "name": "Raigeki",
     "description": "Destroy all monsters your opponent controls.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob053"
   },
   {
@@ -554,7 +554,7 @@
     "name": "Red Medicine",
     "description": "Increase your Life Points by 500 points.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob054"
   },
   {
@@ -562,7 +562,7 @@
     "name": "Sparks",
     "description": "Inflict 200 points of damage to your opponent's Life Points.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob055"
   },
   {
@@ -570,7 +570,7 @@
     "name": "Hinotama",
     "description": "Inflict 500 damage to your opponent.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob056"
   },
   {
@@ -578,7 +578,7 @@
     "name": "Polymerization",
     "description": "Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters from your hand or field as Fusion Material.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob059"
   },
   {
@@ -598,8 +598,8 @@
     "card_id": "52",
     "name": "Gravedigger Ghoul",
     "description": "Select up to 2 Monster Card(s) from your opponent's Graveyard. Remove the selected card(s) from play.",
-    "card_type": "normal",
-    "types": [ "normal" ],
+    "card_type": "spell",
+    "types": [ "instant" ],
     "image": "lob065"
   },
   {
@@ -897,7 +897,7 @@
     "name": "Stop Defense",
     "description": "Select 1 Defense Position monster on your opponent's side of the field and change it to Attack Position.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob095"
   },
   {
@@ -929,7 +929,7 @@
     "name": "Goblin's Secret Remedy",
     "description": "Increase your Life Points by 600 points.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob099"
   },
   {
@@ -937,7 +937,7 @@
     "name": "Final Flame",
     "description": "Inflict 600 points of damage to your opponent's Life Points.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob100"
   },
   {
@@ -945,7 +945,7 @@
     "name": "Swords of Revealing Light",
     "description": "After this card's activation, it remains on the field, but you must destroy it during the End Phase of your opponent's 3rd turn. When this card is activated: If your opponent controls a face-down monster, flip all monsters they control face-up. While this card is face-up on the field, your opponent's monsters cannot declare an attack.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob101"
   },
   {
@@ -1148,7 +1148,7 @@
     "name": "Pot of Greed",
     "description": "Draw 2 cards.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "lob119"
   },
   {
@@ -1276,7 +1276,7 @@
     "name": "Graceful Charity",
     "description": "Draw 3 cards, then discard 2 cards.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdp040"
   },
   {
@@ -1521,7 +1521,7 @@
     "name": "Dark Hole",
     "description": "Destroy all monsters on the field.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy022"
   },
   {
@@ -1529,7 +1529,7 @@
     "name": "Dian Keto the Cure Master",
     "description": "Increase your Life Points by 1000 points.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy023"
   },
   {
@@ -1563,7 +1563,7 @@
     "name": "Fissure",
     "description": "Destroy the 1 face-up monster your opponent controls that has the lowest ATK (your choice, if tied).",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy026"
   },
   {
@@ -1587,7 +1587,7 @@
     "name": "De-Spell",
     "description": "Target 1 face-up Spell, or 1 Set Spell/Trap, on the field; destroy that target if it is a Spell. (If the target is Set, reveal it.)",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy029"
   },
   {
@@ -1595,7 +1595,7 @@
     "name": "Monster Reborn",
     "description": "Target 1 monster in either GY; Special Summon it.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy030"
   },
   {
@@ -1611,7 +1611,7 @@
     "name": "Change Of Heart",
     "description": "Target 1 monster your opponent controls; take control of it until the End Phase.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy032"
   },
   {
@@ -1697,7 +1697,7 @@
     "name": "Last Will",
     "description": "If a monster on your side of the field was sent to your Graveyard this turn, you can Special Summon 1 monster with an ATK of 1500 points or less from your Deck once during this turn. Then shuffle your Deck.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy039"
   },
   {
@@ -1713,7 +1713,7 @@
     "name": "Soul Exchange",
     "description": "Target 1 monster your opponent controls; this turn, if you Tribute a monster, you must Tribute that target, as if you controlled it. You cannot conduct your Battle Phase the turn you activate this card.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy041"
   },
   {
@@ -1721,7 +1721,7 @@
     "name": "Card Destruction",
     "description": "Both players discard as many cards as possible from their hands, then each player draws the same number of cards they discarded.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy042"
   },
   {
@@ -1779,7 +1779,7 @@
     "name": "Remove Trap",
     "description": "Select 1 face-up Trap Card on the field and destroy it.",
     "card_type": "spell",
-    "types": [ "normal" ],
+    "types": [ "instant" ],
     "image": "sdy048"
   },
   {
