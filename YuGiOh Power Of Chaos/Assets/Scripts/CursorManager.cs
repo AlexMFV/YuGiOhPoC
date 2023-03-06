@@ -142,7 +142,7 @@ public class CursorManager : MonoBehaviour
             }
             else
             {
-                if (Globals.hitCard._cardType == "monster" && Helpers.checkStarRating(Globals.p1, Globals.hitCard) == PlayType.Summon)
+                if (Globals.hitCard._cardType != "monster" || (Globals.hitCard._cardType == "monster" && Helpers.checkStarRating(Globals.p1, Globals.hitCard) == PlayType.Summon))
                 {
                     Cursor.SetCursor(c_set, offset, CursorMode.ForceSoftware);
                     Globals.isDefaultCursor = false;

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     static GameTimer timer;
     static BoardManager board;
 
-    static int curr_player = -1;
+    static Player curr_player = null;
 
     static bool firstRun = true;
     static bool debug = false;
@@ -42,9 +42,8 @@ public class GameManager : MonoBehaviour
         Globals.cpu = new Player(2, true);
 
         //Play Jakenpo (Rock paper scissors) to see who goes first
-        curr_player = Globals.p1.ID; //Player 1 goes first
+        curr_player = Globals.p1; //Player 1 goes first
         //^^^^^^^^ TEMPORARY^^^^^^^^
-        //CHANGE THE CURR_PLAYER TO USE THE REFERENCE OF THE PLAYER INSTEAD OF THE ID (EASIER TO ACESS AN REDUCE REUSED CODE)
 
         //Preload the player Decks
         //This can be done from a fileinside the player computer
@@ -124,38 +123,23 @@ public class GameManager : MonoBehaviour
     {
         timer.Wait(100);
         
-        if (curr_player == Globals.p1.ID)
-            curr_player = Globals.cpu.ID;
+        if (curr_player.ID == Globals.p1.ID)
+            curr_player = Globals.cpu;
         else
-            curr_player = Globals.p1.ID;
+            curr_player = Globals.p1;
     }
 
     static void GameStart()
     {
-        if (curr_player == Globals.p1?.ID)
+        if (curr_player.Hand.GetCardCount() < 5)
         {
-            if (Globals.p1.Hand.GetCardCount() < 5)
-            {
-                GameAnimator.InstatiateCard(Globals.p1, Globals.p1.DrawCard());
-                sound.DrawCard();
-                HandManager.ArrangeHand(Globals.p1);
-                timer.Wait(350);
-            }
-            else
-                ChangePlayer();
+            GameAnimator.InstatiateCard(curr_player, curr_player.DrawCard());
+            sound.DrawCard();
+            HandManager.ArrangeHand(curr_player);
+            timer.Wait(350);
         }
         else
-        {
-            if (curr_player == Globals.cpu?.ID && Globals.cpu.Hand.GetCardCount() < 5)
-            {
-                GameAnimator.InstatiateCard(Globals.cpu, Globals.cpu.DrawCard());
-                sound.DrawCard();
-                HandManager.ArrangeHand(Globals.cpu);
-                timer.Wait(350);
-            }
-            else
-                ChangePlayer();
-        }
+            ChangePlayer();
 
         if (Globals.p1?.Hand.GetCardCount() == 5 && Globals.cpu?.Hand.GetCardCount() == 5)
         {
@@ -168,16 +152,10 @@ public class GameManager : MonoBehaviour
     }
 
     static void DrawPhase()
-    {
-        Player player;
-        if (curr_player == Globals.p1.ID)
-            player = Globals.p1;
-        else
-            player = Globals.cpu;
-        
-        GameAnimator.InstatiateCard(player, player.DrawCard());
+    {        
+        GameAnimator.InstatiateCard(curr_player, curr_player.DrawCard());
         sound.DrawCard();
-        HandManager.ArrangeHand(player);
+        HandManager.ArrangeHand(curr_player);
 
         Globals.currentPhase = GamePhase.StandbyPhase;
         timer.Wait(500);
@@ -185,17 +163,10 @@ public class GameManager : MonoBehaviour
 
     static void StandbyPhase()
     {
-        Player player;
         Globals.canPlayCard = true;
 
-        //Process the cards the current player can play (maybe process both players since there are cards that can be activated during DamageStep)
-        if (curr_player == Globals.p1.ID)
-            player = Globals.p1;
-        else
-            player = Globals.cpu;
-
         //Add to new method and call it (repeating code)
-        foreach (Card card in player.Hand.GetCards())
+        foreach (Card card in curr_player.Hand.GetCards())
         {
             ////Mark each card as playable and which play type or not
             //switch (card._cardType)
@@ -209,17 +180,17 @@ public class GameManager : MonoBehaviour
 
             if (card._cardType == "monster")
             {
-                card.PlayType = Helpers.checkStarRating(player, card);
+                card.PlayType = Helpers.checkStarRating(curr_player, card);
             }
 
             if(card._cardType == "spell")
             {
-                card.PlayType = Helpers.checkSpellType(player, card);
+                card.PlayType = Helpers.checkSpellType(curr_player, card);
             }
 
             if(card._cardType == "trap")
             {
-                card.PlayType = Helpers.checkTrapType(player, card);
+                card.PlayType = Helpers.checkTrapType(curr_player, card);
             }
         }
 
@@ -232,7 +203,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.BattlePhase;
 
-        if (curr_player == Globals.p1.ID)
+        if (curr_player.ID == Globals.p1.ID)
         {
             //Player
             //If a card is hit and the user presses the button
@@ -307,6 +278,9 @@ public class GameManager : MonoBehaviour
     
     static void EndPhase()
     {
+        if (Globals.isFirstRound)
+            Globals.isFirstRound = false;
+
         ChangePlayer();
         Globals.currentPhase = GamePhase.DrawPhase;
     }

@@ -25,5 +25,6 @@ namespace Assets.Scripts
 
         public static GamePhase currentPhase = GamePhase.GameStart;
         public static bool canPlayCard = true;
+        public static bool isFirstRound = true;
     }
 }
