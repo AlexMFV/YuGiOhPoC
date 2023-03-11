@@ -98,6 +98,11 @@ namespace Assets.Scripts
             _mainDeck = CacheParser.ParseDeck(_playerId);
         }
 
+        internal List<Card> GetMonsterZone()
+        {
+            return _monsterZone;
+        }
+
         internal Card DrawCard()
         {
             if (_mainDeck.Count > 0)

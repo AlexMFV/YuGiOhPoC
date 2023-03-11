@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Card
   - PlayedCard
+  - Attacker
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Attacker
   - Water
   - UI
   - 

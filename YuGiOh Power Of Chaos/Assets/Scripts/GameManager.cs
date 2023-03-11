@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using TMPro;
 using Unity.Burst.CompilerServices;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,9 +21,15 @@ public class GameManager : MonoBehaviour
     static bool firstRun = true;
     static bool debug = false;
 
+    static bool isAttackSelected = false;
+    static GameObject attackSelected;
+    static List<GameObject> attackObjs;
+
     static SoundManager sound;
     static GameObject phaseObj;
     static GameObject deckCountObj;
+
+    public GameObject attackVectorObj;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +40,7 @@ public class GameManager : MonoBehaviour
         sound = Camera.main.GetComponent<SoundManager>();
         board = new BoardManager();
         timer = new GameTimer();
+        attackObjs = new List<GameObject>();
 
         //This should be done once the game is started and is loading
         CacheParser.ParseCards(); //Loads all the cards in the game
@@ -81,7 +89,7 @@ public class GameManager : MonoBehaviour
             //GameObject obj = TextManager.TakeDamage(Globals.p1, (attack-def)*-1);
             //GameObject obj2 = TextManager.TakeDamage(Globals.cpu, (attack-def)*-1);
 
-            timer.Wait(400);
+            //timer.Wait(400);
             firstRun = false;
         }
 
@@ -94,6 +102,7 @@ public class GameManager : MonoBehaviour
                 case GamePhase.StandbyPhase: StandbyPhase(); break;
                 case GamePhase.MainPhase1: MainPhase1(); break;
                 case GamePhase.BattlePhase: BattlePhase(); break;
+                case GamePhase.BP_StartStep: StartStep(); break;
                 case GamePhase.BP_BattleStep: BattleStep(); break;
                 case GamePhase.BP_DamageStep: DamageStep(); break;
                 case GamePhase.BP_EndStep: EndStep(); break;
@@ -246,16 +255,84 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Battle Phase preparations
     void BattlePhase()
+    {
+        if(Globals.isFirstRound)
+            Globals.currentPhase = GamePhase.MainPhase2;
+
+        //Check all the cards that can attack
+        foreach(Card c in curr_player.GetMonsterZone())
+        {
+            if (c._cardType == "monster" && c._faceup) //&& c._attackMode)
+                c.canAttack = true;
+            else
+                c.canAttack = false;
+        }
+        
+            //Monsters
+            //Not in defense mode
+            //Not flipped down
+        //Show attack indicator on top of each card
+
+        if (Input.GetKeyDown(KeyCode.N))
+            Globals.currentPhase = GamePhase.BP_StartStep;
+    }
+
+    void StartStep()
     {
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.BP_BattleStep;
+
+        foreach(Card c in curr_player.GetMonsterZone())
+        {
+            //if this card has flag canAttack, spawn the attack_vector prefab on top of it
+            if (c.canAttack)
+            {
+                //Spawn attack vector
+                GameObject attacker = Instantiate(attackVectorObj, c.Object.transform.position, Quaternion.identity);
+                attacker.transform.SetParent(c.Object.transform);
+                attacker.transform.localPosition = new Vector3(0, 0, 0);
+                attacker.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+                attacker.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                attackObjs.Add(attacker);
+            }
+        }
+
+        Globals.currentPhase = GamePhase.BP_BattleStep;
     }
 
     void BattleStep()
     {
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.BP_DamageStep;
+
+        //If this object is pressed enabled the isSelected flag, if no other object is pressed
+        if (!isAttackSelected && Input.GetMouseButtonDown(0))
+        {
+            //If no other object is selected, select this object
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.RaycastAll(mousePos, Vector2.zero).Where(x => x.transform.tag == "Attacker").FirstOrDefault();
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.tag == "Attacker" )
+                {
+                    isAttackSelected = true;
+                    attackSelected = hit.collider.gameObject;
+                    attackSelected.GetComponent<AttackCard>().isSelected = true;
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            isAttackSelected = false;
+            if (attackSelected != null)
+            {
+                attackSelected.GetComponent<AttackCard>().isSelected = false;
+                attackSelected = null;
+            }
+        }
     }
 
     void DamageStep()
@@ -268,6 +345,9 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.MainPhase2;
+
+        foreach (GameObject obj in attackObjs)
+            Destroy(obj);
     }
 
     void MainPhase2()

@@ -16,6 +16,8 @@ namespace Assets.Scripts
         //faceup/facedown
         public bool _faceup;
         //attack/defense mode
+        public bool _attackMode;
+        
         [JsonProperty("card_id")]
         public int _cardId; //id associates with the defacto card (image, etc)
         [JsonProperty("name")]
@@ -46,6 +48,7 @@ namespace Assets.Scripts
         public GameObject _prefab;
         public PlayType _playType;
         public bool isSet;
+        public bool canAttack;
 
         public Card(int cardId, GameObject prefab)
         {
