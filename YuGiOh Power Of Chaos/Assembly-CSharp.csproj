@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\MovementType.cs" />
     <Compile Include="Assets\Scripts\CacheParser.cs" />
     <Compile Include="Assets\Scripts\SpriteManager.cs" />
+    <Compile Include="Assets\AttackCard.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\Hand.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Assets\Scripts\GameTimer.cs" />
     <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
-    <Compile Include="Assets\AttackCard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

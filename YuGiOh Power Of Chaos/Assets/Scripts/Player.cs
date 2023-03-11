@@ -143,15 +143,22 @@ namespace Assets.Scripts
 
         internal Transform GetCardPosition(Card card)
         {
+            //CHANGE THIS LATER
+            string player;
+            if(this._playerId == 1)
+                player = "p";
+            else
+                player = "cpu";
+
             if (card._cardType == "monster" || card._cardType == "fusion")
             {
                 if (_monsterZone.Count() <= 5)
-                    return GameObject.Find("p_normal" + (_monsterZone.Count())).transform;
+                    return GameObject.Find($"{player}_normal" + (_monsterZone.Count())).transform;
             }
             else
             {
                 if (_specialZone.Count() <= 5)
-                    return GameObject.Find("p_special" + (_specialZone.Count())).transform;
+                    return GameObject.Find($"{player}_special" + (_specialZone.Count())).transform;
             }
 
             return null;
@@ -187,6 +194,19 @@ namespace Assets.Scripts
         internal int SpecialsCount()
         {
             return _specialZone.Count();
+        }
+
+        internal bool CardBelongsToPlayer(Guid cardID)
+        {
+            if (_monsterZone.Any(y => y._id == cardID)) return true;
+            if (_specialZone.Any(y => y._id == cardID)) return true;
+            if (_graveyard.Any(y => y._id == cardID)) return true;
+            if (_fusionStack.Any(y => y._id == cardID)) return true;
+            if (_sideDeck.Any(y => y._id == cardID)) return true;
+            if (Hand.GetCards().Any(y => y._id == cardID)) return true;
+            if (_mainDeck.Any(y => y._id == cardID)) return true;
+
+            return false;
         }
     }
 }

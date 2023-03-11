@@ -251,7 +251,33 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            //Bot
+            //Bot round
+            //Really simple random plays for testing purposes of the battle phase
+
+            //Get Random monster card from Globals.cpu.Hand
+            //Check if it can be played
+            //If yes, play it
+            Card cpuCard = Globals.cpu.Hand.GetCards().Where(x => Globals.cpu.CanPlayCard(x) && (x._playType == PlayType.Set || x._playType == PlayType.Summon)).FirstOrDefault();
+
+            if (cpuCard != null && Globals.canPlayCard)
+            {
+                Globals.cpu.PlayCard(cpuCard._id);
+
+                if (cpuCard._cardType != "spell" && cpuCard._cardType != "trap")
+                {
+                    cpuCard._faceup = true;
+                    Globals.canPlayCard = false;
+                }
+
+                Destroy(cpuCard.Object);
+                GameAnimator.InstatiatePlayedCard(Globals.cpu, cpuCard, Globals.cpu.GetCardPosition(cpuCard));
+                sound.PlayCard();
+                HandManager.ArrangeHand(Globals.cpu);
+
+                timer.Wait(1000); //Between each card pause the game either to give time to the player to process and/or to play animations/sounds
+            }
+            else
+                Globals.currentPhase = GamePhase.MainPhase2;
         }
     }
 
@@ -295,6 +321,7 @@ public class GameManager : MonoBehaviour
                 attacker.transform.localPosition = new Vector3(0, 0, 0);
                 attacker.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
                 attacker.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                attacker.GetComponent<AttackCard>().parent = c.Object; //Append the parent to a new variable
                 attackObjs.Add(attacker);
             }
         }
@@ -306,6 +333,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.BP_DamageStep;
+
+        if (attackSelected != null && isAttackSelected && !attackSelected.GetComponent<AttackCard>().isSelected)
+        {
+            isAttackSelected = false;
+            attackSelected = null;
+        }
 
         //If this object is pressed enabled the isSelected flag, if no other object is pressed
         if (!isAttackSelected && Input.GetMouseButtonDown(0))
@@ -320,6 +353,18 @@ public class GameManager : MonoBehaviour
                     isAttackSelected = true;
                     attackSelected = hit.collider.gameObject;
                     attackSelected.GetComponent<AttackCard>().isSelected = true;
+                }
+            }
+        }
+
+        if (isAttackSelected && Input.GetMouseButtonDown(0))
+        {
+            if(Globals.hitCard != null)
+            {
+                if (Globals.hitCard.Object != attackSelected.GetComponent<AttackCard>().parent && !curr_player.CardBelongsToPlayer(Globals.hitCard._id))
+                {
+                    attackSelected.GetComponent<AttackCard>().isAttacking = true;
+                    attackSelected.GetComponent<AttackCard>().target = Globals.hitCard.Object;
                 }
             }
         }
