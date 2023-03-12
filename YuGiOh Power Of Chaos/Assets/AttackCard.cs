@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttackCard : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class AttackCard : MonoBehaviour
     public bool isAttacking;
     public bool hitTarget;
     public bool processedTarget;
-    float speed = 10f;
-    float increase = 1.2f;
-    
+    float speed = 1f;
+    float increase = 1.04f;
+    public Sprite final_sprite;
+
     // Start is called before the first frame update
     void Start()
     {
+        final_sprite = Resources.Load<Sprite>("UI/attacked");
         isSelected = false;
         isAttacking = false;
         hitTarget = false;
@@ -59,9 +62,7 @@ public class AttackCard : MonoBehaviour
                                 hitTarget = true;
                                 isAttacking = false;
                                 isSelected = false;
-                                //Process DamageStep
-                                //Instead of destroying the target change to the half sword
-                                //Destroy(target);
+                                this.GetComponent<SpriteRenderer>().sprite = final_sprite;
                             }
                             speed *= increase;
                         }

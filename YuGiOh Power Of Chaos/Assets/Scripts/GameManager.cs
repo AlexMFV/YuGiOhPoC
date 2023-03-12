@@ -391,6 +391,8 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.MainPhase2;
 
+        isAttackSelected = false;
+
         foreach (GameObject obj in attackObjs)
             Destroy(obj);
     }
