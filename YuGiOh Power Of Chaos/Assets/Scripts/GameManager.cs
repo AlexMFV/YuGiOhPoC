@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     static Player curr_player = null;
 
     static bool firstRun = true;
-    static bool debug = false;
+    static bool debug = true;
 
     static bool isAttackSelected = false;
     static GameObject attackSelected;
@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
     static GameObject deckCountObj;
 
     public GameObject attackVectorObj;
+    public GameObject damageIndicator;
+
+    //DEBUG ONLY Variables
+    static float damage = 500;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +45,10 @@ public class GameManager : MonoBehaviour
         board = new BoardManager();
         timer = new GameTimer();
         attackObjs = new List<GameObject>();
+
+        //DEBUG ONLY Initialize
+        //damageIndicator = Instantiate(damageIndicator);
+        //damageIndicator.transform.position = new Vector2(0.0f, 0.0f);
 
         //This should be done once the game is started and is loading
         CacheParser.ParseCards(); //Loads all the cards in the game
@@ -77,8 +85,12 @@ public class GameManager : MonoBehaviour
         UpdatePhase();
         UpdateDeckCount();
 
+        //DEBUG ONLY
+        UpdateDamage();
+
         if (debug && firstRun)
         {
+            //timer.Wait(1000);
             //Show all card spots
             //foreach (Transform t in board.allpositions)
             //    GameAnimator.InstatiatePlayedCard(Globals.p1, Globals.p1.Deck[0], t);
@@ -114,6 +126,18 @@ public class GameManager : MonoBehaviour
         {
             timer.Tick();
         }
+    }
+
+    //DEBUG ONLY
+    //TRY TO RUN DAMAGE INDICATOR ON ANOTHER THREAD
+    static void UpdateDamage()
+    {
+        TextManager.TakeDamage(Globals.p1, (int)damage);
+        TextManager.TakeDamage(Globals.cpu, (int)damage);
+        int damageTaken = 999;
+        damage += 1 * Time.deltaTime * damageTaken; //Depending on the value of damageTaken, the damage will always take 1 second to reach 0
+        if(damage > 0)
+            damage = -damageTaken;
     }
 
     static void UpdatePhase()
@@ -322,6 +346,7 @@ public class GameManager : MonoBehaviour
                 attacker.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
                 attacker.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 attacker.GetComponent<AttackCard>().parent = c.Object; //Append the parent to a new variable
+                attacker.GetComponent<AttackCard>().card_ref = c; //Append the parent to a new variable
                 attackObjs.Add(attacker);
             }
         }
@@ -384,6 +409,47 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.BP_EndStep;
+
+        Card source = attackSelected.GetComponent<AttackCard>().card_ref;
+        Card hit = Globals.hitCard;
+
+        DamageResolver(source, hit);
+    }
+
+    void DamageResolver(Card source, Card hit)
+    {
+        int sourceHP = source.GetPrimaryValue();
+        int hitHP = hit.GetPrimaryValue();
+        int damageControl;
+
+        if (sourceHP - hitHP == 0)
+        {
+            damageControl = 0;
+            //Should play shield animation on attacked card
+            timer.Wait(1000);
+            Globals.currentPhase = GamePhase.BP_BattleStep;
+            return;
+        }
+
+        if(sourceHP > hitHP)
+        {
+            damageControl = sourceHP - hitHP;
+            //Kill the attacked card
+            //Deduct from the CPU's HP
+            timer.Wait(1000);
+            Globals.currentPhase = GamePhase.BP_BattleStep;
+            return;
+        }
+
+        if (sourceHP < hitHP)
+        {
+            damageControl = hitHP - sourceHP;
+            //Kill the attacking card
+            //Deduct from the player's HP
+            timer.Wait(1000);
+            Globals.currentPhase = GamePhase.BP_BattleStep;
+            return;
+        }
     }
 
     void EndStep()

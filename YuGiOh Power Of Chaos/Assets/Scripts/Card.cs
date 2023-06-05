@@ -101,5 +101,22 @@ namespace Assets.Scripts
         {
             return new Card(this);
         }
+
+        //Corresponds to the value of the card depending on its position, if the card is in attack mode, the attack value is returned, otherwise the defense value is returned
+        public int GetPrimaryValue()
+        {
+            if (_attackMode)
+                return _attack;
+            else
+                return _defense;
+        }
+
+        public int GetCardValue(bool isAttackMode)
+        {
+            if (isAttackMode)
+                return _attack;
+            else
+                return _defense;
+        }
     }
 }

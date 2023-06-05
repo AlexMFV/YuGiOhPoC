@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Search;
@@ -8,12 +9,13 @@ public class AttackCard : MonoBehaviour
 {
     public bool isSelected;
     public GameObject parent;
+    public Card card_ref;
     public GameObject target;
     public bool isAttacking;
     public bool hitTarget;
     public bool processedTarget;
     float speed = 1f;
-    float increase = 1.04f;
+    float increase = 1.025f;
     public Sprite final_sprite;
 
     // Start is called before the first frame update
@@ -63,6 +65,7 @@ public class AttackCard : MonoBehaviour
                                 isAttacking = false;
                                 isSelected = false;
                                 this.GetComponent<SpriteRenderer>().sprite = final_sprite;
+                                Globals.currentPhase = GamePhase.BP_DamageStep;
                             }
                             speed *= increase;
                         }

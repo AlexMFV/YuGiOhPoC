@@ -9,6 +9,7 @@ namespace Assets.Scripts
     internal enum MovementType
     {
         INSTANT,
-        LINEAR
+        LINEAR,
+        EXPONENTIAL
     }
 }
