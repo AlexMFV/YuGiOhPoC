@@ -77,6 +77,9 @@ public class GameManager : MonoBehaviour
         Globals.cpu_cards = Globals.cpu.GetAllPlayerCards();
 
         Globals.currentPhase = GamePhase.GameStart;
+
+        TextManager.SetHP(Globals.p1, Globals.p1.Health);
+        TextManager.SetHP(Globals.cpu, Globals.cpu.Health);
     }
 
     // Update is called once per frame
@@ -132,12 +135,8 @@ public class GameManager : MonoBehaviour
     //TRY TO RUN DAMAGE INDICATOR ON ANOTHER THREAD
     static void UpdateDamage()
     {
-        TextManager.TakeDamage(Globals.p1, (int)damage);
-        TextManager.TakeDamage(Globals.cpu, (int)damage);
-        int damageTaken = 999;
-        damage += 1 * Time.deltaTime * damageTaken; //Depending on the value of damageTaken, the damage will always take 1 second to reach 0
-        if(damage > 0)
-            damage = -damageTaken;
+        if (TextManager.ActiveIndicator != null)
+            TextManager.ActiveIndicator.Update((int)(.5f * Time.fixedDeltaTime * TextManager.ActiveIndicator.InitialDamage)); //Depending on the value of damageTaken, the damage will always take 1 second to reach 0
     }
 
     static void UpdatePhase()
@@ -357,7 +356,7 @@ public class GameManager : MonoBehaviour
     void BattleStep()
     {
         if (Input.GetKeyDown(KeyCode.N))
-            Globals.currentPhase = GamePhase.BP_DamageStep;
+            Globals.currentPhase = GamePhase.BP_EndStep;
 
         if (attackSelected != null && isAttackSelected && !attackSelected.GetComponent<AttackCard>().isSelected)
         {
@@ -390,6 +389,7 @@ public class GameManager : MonoBehaviour
                 {
                     attackSelected.GetComponent<AttackCard>().isAttacking = true;
                     attackSelected.GetComponent<AttackCard>().target = Globals.hitCard.Object;
+                    Globals.permanentHitCard = Globals.hitCard;
                 }
             }
         }
@@ -411,13 +411,20 @@ public class GameManager : MonoBehaviour
             Globals.currentPhase = GamePhase.BP_EndStep;
 
         Card source = attackSelected.GetComponent<AttackCard>().card_ref;
-        Card hit = Globals.hitCard;
+        Card hit = Globals.permanentHitCard;
 
         DamageResolver(source, hit);
     }
 
     void DamageResolver(Card source, Card hit)
     {
+        if(source == null || hit == null)
+        {
+            throw new Exception("Source or hit card is null");
+            //Globals.currentPhase = GamePhase.BP_EndStep;
+            //return;
+        }
+
         int sourceHP = source.GetPrimaryValue();
         int hitHP = hit.GetPrimaryValue();
         int damageControl;
@@ -426,28 +433,36 @@ public class GameManager : MonoBehaviour
         {
             damageControl = 0;
             //Should play shield animation on attacked card
-            timer.Wait(1000);
+            Globals.permanentHitCard = null; //Clear the card used for damage calculation
+            //The attack vector prefab needs to be cleaned
             Globals.currentPhase = GamePhase.BP_BattleStep;
+            timer.Wait(1000);
             return;
         }
 
         if(sourceHP > hitHP)
         {
-            damageControl = sourceHP - hitHP;
-            //Kill the attacked card
-            //Deduct from the CPU's HP
+            damageControl = (sourceHP - hitHP) * -1;
+            Globals.cpu.TakeDamage(damageControl);
+
+            hit.Kill();//Kill the attacked card
+            Globals.permanentHitCard = null; //Clear the card used for damage calculation
+            //The attack vector prefab needs to be cleaned
+            Globals.currentPhase = GamePhase.BP_BattleStep; //Not needed as we already are in the battle step
             timer.Wait(1000);
-            Globals.currentPhase = GamePhase.BP_BattleStep;
             return;
         }
 
         if (sourceHP < hitHP)
         {
             damageControl = hitHP - sourceHP;
-            //Kill the attacking card
-            //Deduct from the player's HP
-            timer.Wait(1000);
+            Globals.p1.TakeDamage(damageControl);
+
+            //The attacking card does is not killed, the player simply loses HP
+            Globals.permanentHitCard = null; //Clear the card used for damage calculation
+            //The attack vector prefab needs to be cleaned
             Globals.currentPhase = GamePhase.BP_BattleStep;
+            timer.Wait(1000);
             return;
         }
     }

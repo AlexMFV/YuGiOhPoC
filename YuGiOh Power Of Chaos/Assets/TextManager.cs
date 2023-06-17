@@ -1,12 +1,15 @@
 using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Text = UnityEngine.UI.Text;
 
 public static class TextManager
 {
+    public static Indicator ActiveIndicator = null;
+
     public static GameObject TakeDamage(Player player, int damage)
     {
         GameObject parent;
@@ -17,7 +20,7 @@ public static class TextManager
         else
             parent = GameObject.Find("cpu_health_label");
 
-        //Check if a GameObject with the name DamageText already exists inside the parent, if it does use that one instead
+        //Check if a GameObject with the name DamageText already exists inside the parent, if it does, use that one instead
         foreach (Transform child in parent.transform)
             if (child.name == "DamageText")
                 newChild = child.gameObject;
@@ -29,7 +32,18 @@ public static class TextManager
         //Create a new GameObject
         GameObject final = SetText(newChild, parent, damage.ToString(), "Font/DamageFont", true, customScale: new Vector3(4f, 4f, 1f), sizeDelta: new Vector2(50f, 10f));
 
+        ActiveIndicator = new Indicator(final, damage, player);
+        GameManager.shouldRun = false;
+
         return final;
+    }
+
+    internal static void SetHP(Player player, int damage)
+    {
+        if(player.ID == 1)
+            GameObject.Find("p1_hp").GetComponent<TextMeshProUGUI>().text = damage.ToString();
+        else
+            GameObject.Find("p2_hp").GetComponent<TextMeshProUGUI>().text = damage.ToString();
     }
 
     private static GameObject SetText(GameObject textObj, GameObject parent, string text, string fontName, bool useParent = false, Vector3? customPos = null, Vector3? customScale = null, Vector2? sizeDelta = null)
@@ -67,5 +81,41 @@ public static class TextManager
         }
 
         return textObj;
+    }
+}
+
+public class Indicator
+{
+    private GameObject obj;
+    private int initialDamage;
+    private int damage;
+    private Player player;
+
+    public Indicator(GameObject obj, int initialDamage, Player player)
+    {
+        this.obj = obj;
+        this.initialDamage = initialDamage;
+        this.damage = initialDamage;
+        this.player = player;
+    }
+
+    public GameObject Object { get => obj; set => obj = value; }
+    public int InitialDamage { get => initialDamage; set => initialDamage = value; }
+    public int Damage { get => damage; set => damage = value; }
+    public Player Player { get => player; set => player = value; }
+
+    //Will be used to update the label every time it is called
+    public void Update(int takeDamage)
+    {
+        damage += takeDamage * -1;
+        obj.GetComponent<Text>().text = damage.ToString();
+
+        if (damage >= 0)
+        {
+            player.TakeDamage(initialDamage);
+            TextManager.ActiveIndicator = null;
+            GameObject.Destroy(obj);
+            GameManager.shouldRun = true;
+        }
     }
 }

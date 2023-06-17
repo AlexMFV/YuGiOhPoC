@@ -40,8 +40,13 @@ namespace Assets.Scripts
             GameObject obj = Instantiate(playedCard, position.transform);
             obj.name = $"{player.ID}:{player_card._id}"; //played Card (maybe add -p- in the middle to differenciate)
 
-            if(player_card._cardType == "trap")
+            player_card._attackMode = true;
+
+            if (player_card._cardType == "trap")
+            {
+                player_card._attackMode = false;
                 player_card._faceup = false;
+            }
 
             if (player_card.isSet)
             {
@@ -49,6 +54,7 @@ namespace Assets.Scripts
                     obj.transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
                 
                 player_card._faceup = false;
+                player_card._attackMode = false;
             }
             
             

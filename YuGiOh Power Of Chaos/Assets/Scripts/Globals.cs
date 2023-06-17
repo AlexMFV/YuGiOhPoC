@@ -19,6 +19,7 @@ namespace Assets.Scripts
         //Cursor
         public static RaycastHit2D hit;
         public static Card hitCard = null;
+        public static Card permanentHitCard = null;
         public static bool isCardHit = false;
         public static bool isDefaultCursor = true;
         public static bool isPlayedCard = false;

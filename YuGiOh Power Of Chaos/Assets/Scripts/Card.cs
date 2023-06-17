@@ -71,6 +71,7 @@ namespace Assets.Scripts
         {
             _id = Guid.NewGuid();
             _faceup = false;
+            _attackMode = card._attackMode;
             _cardId = card._cardId; //getCardFromDeck();
             _name = card._name; //CardManager.getName(_cardId);
             _description = card._description; //CardManager.getDescription(_cardId);
@@ -92,9 +93,15 @@ namespace Assets.Scripts
         {
             _faceup = !_faceup;
             if (_faceup)
+            {
+                this._attackMode = true;
                 this.Object.GetComponent<SpriteRenderer>().sprite = Globals.Sprites[this._imageName];
+            }
             else
+            {
+                this._attackMode = false;
                 this.Object.GetComponent<SpriteRenderer>().sprite = Globals.Sprites["card_ura"];
+            }
         }
 
         public Card Clone()
@@ -117,6 +124,11 @@ namespace Assets.Scripts
                 return _attack;
             else
                 return _defense;
+        }
+
+        public void Kill()
+        {
+            GameObject.Destroy(this.Object);
         }
     }
 }

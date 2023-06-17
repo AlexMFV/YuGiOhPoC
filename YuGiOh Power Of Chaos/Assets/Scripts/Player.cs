@@ -27,6 +27,7 @@ namespace Assets.Scripts
         public Hand Hand { get { return _hand; } set { _hand = value; } }
         public List<Card> Deck { get { return _mainDeck; } set { _mainDeck = value; } }
         public Transform HandPosition { get { return handPos; } }
+        public int Health { get { return _health; } set { _health = value; } }
 
         //public Card FindCard(string cardTag)
         //{
@@ -207,6 +208,22 @@ namespace Assets.Scripts
             if (_mainDeck.Any(y => y._id == cardID)) return true;
 
             return false;
+        }
+
+        internal void TakeDamage(int damage)
+        {
+            if(damage > 0)
+            {
+                //Use blue font
+                //Plus sign in front
+                this.Health += damage; //Should be added to health
+                //Play damage earned sound
+            }
+            else
+            {
+                TextManager.TakeDamage(this, damage);
+                this.Health += damage; //Should be added to health
+            }
         }
     }
 }
