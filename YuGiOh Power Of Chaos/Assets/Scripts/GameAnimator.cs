@@ -21,7 +21,7 @@ namespace Assets.Scripts
             playedCard = Resources.Load("Prefabs/playedCard") as GameObject;
         }
 
-        internal static void InstatiateCard(Player player, Card player_card)
+        internal static void InstantiateCard(Player player, Card player_card)
         {
             GameObject obj = Instantiate(handCard, player.HandPosition);
             obj.name = $"{player.ID}:{player_card._id}"; //hand Card (maybe add -h- in the middle to differenciate between played and hand cards)
@@ -35,7 +35,7 @@ namespace Assets.Scripts
                 player_card.Object = obj;
         }
         
-        internal static void InstatiatePlayedCard(Player player, Card player_card, Transform position)
+        internal static void InstantiatePlayedCard(Player player, Card player_card, Transform position)
         {
             GameObject obj = Instantiate(playedCard, position.transform);
             obj.name = $"{player.ID}:{player_card._id}"; //played Card (maybe add -p- in the middle to differenciate)
@@ -80,7 +80,12 @@ namespace Assets.Scripts
             newPos.z = 0f;
 
             GameObject txtobj = new GameObject($"label-{card._id}");
-            txtobj.transform.SetParent(trans);
+
+            //if (trans.childCount > 0)
+            //    txtobj.transform.SetParent(trans.GetChild(0));
+            //else
+                txtobj.transform.SetParent(trans);
+
             txtobj.transform.position = newPos;
             TextMeshPro label = txtobj.AddComponent<TextMeshPro>();
             label.text = $"{card._attack}/{card._defense}";
@@ -89,6 +94,9 @@ namespace Assets.Scripts
             label.fontStyle = FontStyles.Bold;
             label.horizontalAlignment = HorizontalAlignmentOptions.Center;
             label.verticalAlignment = VerticalAlignmentOptions.Middle;
+
+            if (trans.childCount > 0)
+                txtobj.transform.SetParent(trans.GetChild(0));
         }
     }
 }

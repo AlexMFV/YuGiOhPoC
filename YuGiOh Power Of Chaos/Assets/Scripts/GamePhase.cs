@@ -18,6 +18,7 @@ namespace Assets.Scripts
         BP_DamageStep,
         BP_EndStep,
         MainPhase2,
-        EndPhase
+        EndPhase,
+        EndGame
     }
 }

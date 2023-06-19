@@ -105,17 +105,19 @@ public class Indicator
     public Player Player { get => player; set => player = value; }
 
     //Will be used to update the label every time it is called
-    public void Update(int takeDamage)
+    public void Update(int takeDamage, SoundManager sound)
     {
         damage += takeDamage * -1;
         obj.GetComponent<Text>().text = damage.ToString();
 
         if (damage >= 0)
         {
-            player.TakeDamage(initialDamage);
+            //player.TakeDamage(initialDamage);
             TextManager.ActiveIndicator = null;
             GameObject.Destroy(obj);
+            sound.CompleteHP();
             GameManager.shouldRun = true;
+            GameManager.hpFirstRun = true;
         }
     }
 }

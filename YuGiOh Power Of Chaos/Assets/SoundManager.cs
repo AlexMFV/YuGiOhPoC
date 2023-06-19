@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    static AudioSource source;
+    public AudioSource source;
+    public AudioSource stageMusic;
     [SerializeField] AudioClip moveCard;
     [SerializeField] AudioClip playCard;
+    [SerializeField] AudioClip takeDamage;
+    [SerializeField] AudioClip attackCard;
+    [SerializeField] AudioClip startGame;
+    [SerializeField] AudioClip losingHP;
+    [SerializeField] AudioClip completeHP;
+    [SerializeField] AudioClip stage1;
+    [SerializeField] AudioClip stage2;
 
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        //source = GetComponent<AudioSource>();
+        //stageMusic = GetComponent<AudioSource>();
+        //Change stageMusic to another audio source
     }
 
     // Update is called once per frame
@@ -22,13 +32,62 @@ public class SoundManager : MonoBehaviour
 
     public void DrawCard()
     {
-        source.clip = moveCard;
-        source.Play();
+        //source.clip = moveCard;
+        source.PlayOneShot(moveCard);
     }
 
     public void PlayCard()
     {
-        source.clip = playCard;
+        //source.clip = playCard;
+        //source.Play();
+        source.PlayOneShot(playCard);
+    }
+
+    public void TakeDamage()
+    {
+        source.PlayOneShot(takeDamage);
+    }
+
+    public void AttackCard()
+    {
+        source.PlayOneShot(attackCard);
+    }
+
+    public void StartGame()
+    {
+        source.volume = 0.3f;
+        source.PlayOneShot(startGame);
+    }
+
+    public void LosingHP()
+    {
+        source.clip = losingHP;
+        source.loop = true;
+        source.volume = 1.0f;
         source.Play();
+    }
+
+    public void CompleteHP()
+    {
+        source.Stop();
+        source.loop = false;
+        source.volume = 0.3f;
+        source.PlayOneShot(completeHP);
+    }
+
+    public void Stage1Music()
+    {
+        stageMusic.clip = stage1;
+        stageMusic.volume = 0.3f;
+        stageMusic.loop = true;
+        stageMusic.Play();
+    }
+
+    public void Stage2Music()
+    {
+        stageMusic.clip = stage2;
+        stageMusic.volume = 0.3f;
+        stageMusic.loop = true;
+        stageMusic.Play();
     }
 }

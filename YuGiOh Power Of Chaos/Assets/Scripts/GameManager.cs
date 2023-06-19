@@ -13,8 +13,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static bool shouldRun = true;
-    static GameTimer timer;
+    public static GameTimer timer;
     static BoardManager board;
+    public static bool hpFirstRun = true;
 
     static Player curr_player = null;
 
@@ -25,15 +26,12 @@ public class GameManager : MonoBehaviour
     static GameObject attackSelected;
     static List<GameObject> attackObjs;
 
-    static SoundManager sound;
+    public static SoundManager sound;
     static GameObject phaseObj;
     static GameObject deckCountObj;
 
     public GameObject attackVectorObj;
     public GameObject damageIndicator;
-
-    //DEBUG ONLY Variables
-    static float damage = 500;
 
     // Start is called before the first frame update
     void Start()
@@ -45,10 +43,6 @@ public class GameManager : MonoBehaviour
         board = new BoardManager();
         timer = new GameTimer();
         attackObjs = new List<GameObject>();
-
-        //DEBUG ONLY Initialize
-        //damageIndicator = Instantiate(damageIndicator);
-        //damageIndicator.transform.position = new Vector2(0.0f, 0.0f);
 
         //This should be done once the game is started and is loading
         CacheParser.ParseCards(); //Loads all the cards in the game
@@ -80,6 +74,8 @@ public class GameManager : MonoBehaviour
 
         TextManager.SetHP(Globals.p1, Globals.p1.Health);
         TextManager.SetHP(Globals.cpu, Globals.cpu.Health);
+
+        timer.Wait(1500);
     }
 
     // Update is called once per frame
@@ -88,15 +84,19 @@ public class GameManager : MonoBehaviour
         UpdatePhase();
         UpdateDeckCount();
 
-        //DEBUG ONLY
-        UpdateDamage();
-
-        if (debug && firstRun)
+        if (firstRun)
         {
+            sound.StartGame();
+            System.Random r = new System.Random();
+            int i = r.Next(0, 2);
+            if(i == 0)
+                sound.Stage1Music();
+            else
+                sound.Stage2Music();
             //timer.Wait(1000);
             //Show all card spots
             //foreach (Transform t in board.allpositions)
-            //    GameAnimator.InstatiatePlayedCard(Globals.p1, Globals.p1.Deck[0], t);
+            //    GameAnimator.InstantiatePlayedCard(Globals.p1, Globals.p1.Deck[0], t);
 
             //Testing with damage text
             //int attack = 3000;
@@ -110,6 +110,8 @@ public class GameManager : MonoBehaviour
 
         if (shouldRun)
         {
+            UpdateDamage();
+
             switch (Globals.currentPhase)
             {
                 case GamePhase.GameStart: GameStart(); break;
@@ -121,8 +123,9 @@ public class GameManager : MonoBehaviour
                 case GamePhase.BP_BattleStep: BattleStep(); break;
                 case GamePhase.BP_DamageStep: DamageStep(); break;
                 case GamePhase.BP_EndStep: EndStep(); break;
-                case GamePhase.MainPhase2: MainPhase2();  break;
+                case GamePhase.MainPhase2: MainPhase2(); break;
                 case GamePhase.EndPhase: EndPhase(); break;
+                case GamePhase.EndGame: EndGame(); break;
             }
         }
         else
@@ -136,7 +139,29 @@ public class GameManager : MonoBehaviour
     static void UpdateDamage()
     {
         if (TextManager.ActiveIndicator != null)
-            TextManager.ActiveIndicator.Update((int)(.5f * Time.fixedDeltaTime * TextManager.ActiveIndicator.InitialDamage)); //Depending on the value of damageTaken, the damage will always take 1 second to reach 0
+        {
+            if (hpFirstRun)
+            {
+                sound.LosingHP();
+                hpFirstRun = false;
+            }
+            float test = .05f * Time.fixedDeltaTime * TextManager.ActiveIndicator.InitialDamage;
+
+            if(test > -1)
+                test = -1;
+
+            TextManager.ActiveIndicator.Player.Health += (int)test;
+
+            //Winning/Losing condition
+            if(TextManager.ActiveIndicator.Player.Health <= 0)
+            {
+                TextManager.ActiveIndicator.Player.Health = 0;
+                Globals.currentPhase = GamePhase.EndGame;
+            }
+
+            TextManager.SetHP(TextManager.ActiveIndicator.Player, TextManager.ActiveIndicator.Player.Health);
+            TextManager.ActiveIndicator.Update((int)test, sound); //Depending on the value of damageTaken, the damage will always take 1 second to reach 0
+        }
     }
 
     static void UpdatePhase()
@@ -165,7 +190,7 @@ public class GameManager : MonoBehaviour
     {
         if (curr_player.Hand.GetCardCount() < 5)
         {
-            GameAnimator.InstatiateCard(curr_player, curr_player.DrawCard());
+            GameAnimator.InstantiateCard(curr_player, curr_player.DrawCard());
             sound.DrawCard();
             HandManager.ArrangeHand(curr_player);
             timer.Wait(350);
@@ -185,7 +210,7 @@ public class GameManager : MonoBehaviour
 
     static void DrawPhase()
     {        
-        GameAnimator.InstatiateCard(curr_player, curr_player.DrawCard());
+        GameAnimator.InstantiateCard(curr_player, curr_player.DrawCard());
         sound.DrawCard();
         HandManager.ArrangeHand(curr_player);
 
@@ -256,7 +281,7 @@ public class GameManager : MonoBehaviour
                                 Globals.canPlayCard = false;
 
                             Destroy(card.Object);
-                            GameAnimator.InstatiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
+                            GameAnimator.InstantiatePlayedCard(Globals.p1, card, Globals.p1.GetCardPosition(card));
                             sound.PlayCard();
                             HandManager.ArrangeHand(Globals.p1);
                         }
@@ -293,7 +318,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 Destroy(cpuCard.Object);
-                GameAnimator.InstatiatePlayedCard(Globals.cpu, cpuCard, Globals.cpu.GetCardPosition(cpuCard));
+                GameAnimator.InstantiatePlayedCard(Globals.cpu, cpuCard, Globals.cpu.GetCardPosition(cpuCard));
                 sound.PlayCard();
                 HandManager.ArrangeHand(Globals.cpu);
 
@@ -390,6 +415,7 @@ public class GameManager : MonoBehaviour
                     attackSelected.GetComponent<AttackCard>().isAttacking = true;
                     attackSelected.GetComponent<AttackCard>().target = Globals.hitCard.Object;
                     Globals.permanentHitCard = Globals.hitCard;
+                    isAttackSelected = false; //TODO: Probably working. Check if we can attack again after finishing an attack with another card
                 }
             }
         }
@@ -412,18 +438,16 @@ public class GameManager : MonoBehaviour
 
         Card source = attackSelected.GetComponent<AttackCard>().card_ref;
         Card hit = Globals.permanentHitCard;
+        //sound.AttackCard();
 
+        //We attack and play the attack sound, after that we wait 1/2 seconds and then the damage label is shown
         DamageResolver(source, hit);
     }
 
     void DamageResolver(Card source, Card hit)
     {
         if(source == null || hit == null)
-        {
             throw new Exception("Source or hit card is null");
-            //Globals.currentPhase = GamePhase.BP_EndStep;
-            //return;
-        }
 
         int sourceHP = source.GetPrimaryValue();
         int hitHP = hit.GetPrimaryValue();
@@ -436,7 +460,7 @@ public class GameManager : MonoBehaviour
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
             //The attack vector prefab needs to be cleaned
             Globals.currentPhase = GamePhase.BP_BattleStep;
-            timer.Wait(1000);
+            timer.Wait(1500);
             return;
         }
 
@@ -445,11 +469,11 @@ public class GameManager : MonoBehaviour
             damageControl = (sourceHP - hitHP) * -1;
             Globals.cpu.TakeDamage(damageControl);
 
-            hit.Kill();//Kill the attacked card
+            hit.Kill(Globals.cpu);//Kill the attacked card
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
-            //The attack vector prefab needs to be cleaned
             Globals.currentPhase = GamePhase.BP_BattleStep; //Not needed as we already are in the battle step
-            timer.Wait(1000);
+            sound.TakeDamage();
+            timer.Wait(1500);
             return;
         }
 
@@ -458,11 +482,11 @@ public class GameManager : MonoBehaviour
             damageControl = hitHP - sourceHP;
             Globals.p1.TakeDamage(damageControl);
 
-            //The attacking card does is not killed, the player simply loses HP
+            //The attacking card is not killed, the player simply loses HP
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
-            //The attack vector prefab needs to be cleaned
             Globals.currentPhase = GamePhase.BP_BattleStep;
-            timer.Wait(1000);
+            sound.TakeDamage();
+            timer.Wait(1500);
             return;
         }
     }
@@ -491,5 +515,17 @@ public class GameManager : MonoBehaviour
 
         ChangePlayer();
         Globals.currentPhase = GamePhase.DrawPhase;
+    }
+
+    static void EndGame()
+    {
+        if(Globals.p1.Health <= 0)
+        {
+            //Player 2 wins
+        }
+        else
+        {
+            //Player 1 wins
+        }
     }
 }

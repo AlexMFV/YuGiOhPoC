@@ -126,8 +126,9 @@ namespace Assets.Scripts
                 return _defense;
         }
 
-        public void Kill()
+        public void Kill(Player player)
         {
+            player.RemoveMonster(this._id);
             GameObject.Destroy(this.Object);
         }
     }
