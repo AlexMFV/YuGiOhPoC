@@ -15,6 +15,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip completeHP;
     [SerializeField] AudioClip stage1;
     [SerializeField] AudioClip stage2;
+    [SerializeField] AudioClip nextTurn;
+    [SerializeField] AudioClip battlePhase;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +67,16 @@ public class SoundManager : MonoBehaviour
         source.loop = true;
         source.volume = 1.0f;
         source.Play();
+    }
+
+    public void BattlePhase()
+    {
+        source.PlayOneShot(battlePhase);
+    }
+
+    public void NextTurn()
+    {
+        source.PlayOneShot(nextTurn);
     }
 
     public void CompleteHP()

@@ -15,10 +15,24 @@ namespace Assets.Scripts
         static GameObject handCard;
         static GameObject playedCard;
 
+        //Animators
+        [SerializeField]
+        public static Animator animator;
+        //public Animator animator_nextPlayerP1;
+
         void Start()
         {
             handCard = Resources.Load("Prefabs/handCard") as GameObject;
             playedCard = Resources.Load("Prefabs/playedCard") as GameObject;
+
+            //Find GameObject named GamePhaseAnimator
+            GameObject animatorObj = GameObject.Find("GamePhaseAnimator");
+
+            if(animatorObj != null)
+                animator = animatorObj.GetComponent<Animator>();
+
+            if(animator == null)
+                Debug.Log("Animator not found");
         }
 
         internal static void InstantiateCard(Player player, Card player_card)
@@ -97,6 +111,14 @@ namespace Assets.Scripts
 
             if (trans.childCount > 0)
                 txtobj.transform.SetParent(trans.GetChild(0));
+        }
+
+        internal static void AnimateNextPlayer(Player currentPlayer)
+        {
+            if(currentPlayer.ID == 1) //isPlayer then play the blue to red animation
+                animator.Play("NextPlayerCPU", -1, 0.0f);
+            else
+                animator.Play("NextPlayerP1", -1, 0.0f);
         }
     }
 }

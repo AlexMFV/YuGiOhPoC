@@ -343,14 +343,17 @@ public class GameManager : MonoBehaviour
             else
                 c.canAttack = false;
         }
-        
-            //Monsters
-            //Not in defense mode
-            //Not flipped down
+
+        //Monsters
+        //Not in defense mode
+        //Not flipped down
         //Show attack indicator on top of each card
 
         if (Input.GetKeyDown(KeyCode.N))
+        {
+            sound.BattlePhase();
             Globals.currentPhase = GamePhase.BP_StartStep;
+        }
     }
 
     void StartStep()
@@ -513,7 +516,10 @@ public class GameManager : MonoBehaviour
         if (Globals.isFirstRound)
             Globals.isFirstRound = false;
 
+        GameAnimator.AnimateNextPlayer(curr_player);
+        sound.NextTurn();
         ChangePlayer();
+        timer.Wait(2000);
         Globals.currentPhase = GamePhase.DrawPhase;
     }
 
