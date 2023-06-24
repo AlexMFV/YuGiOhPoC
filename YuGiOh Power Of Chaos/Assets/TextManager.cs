@@ -41,9 +41,9 @@ public static class TextManager
     internal static void SetHP(Player player, int damage)
     {
         if(player.ID == 1)
-            GameObject.Find("p1_hp").GetComponent<TextMeshProUGUI>().text = damage.ToString();
+            GameObject.Find("p1_hp").GetComponent<Text>().text = damage.ToString();
         else
-            GameObject.Find("p2_hp").GetComponent<TextMeshProUGUI>().text = damage.ToString();
+            GameObject.Find("p2_hp").GetComponent<Text>().text = damage.ToString();
     }
 
     private static GameObject SetText(GameObject textObj, GameObject parent, string text, string fontName, bool useParent = false, Vector3? customPos = null, Vector3? customScale = null, Vector2? sizeDelta = null)
