@@ -299,6 +299,26 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            //Main Phase 1
+            //Spells
+            //Monsters
+
+            //Main Phase 2
+            //Traps
+
+            //Gets the highest attack playable card and play it.
+            //If the highest playable card is smaller than the player 1 cards in the field, play the highest defense playable card.
+            //Otherwise don't play anything.
+
+            //If the cpu has played cards, check if the player has cards in the field tha can be attacked, if it does and the cpu cannot attack any of the players cards put the
+            ////cards in defense mode.
+            
+            //Hand.GetHighestAttackCard();
+            //Hand.GetHighestSpellCard();
+
+
+            //Set all the trap cards the player has.
+
             //Bot round
             //Really simple random plays for testing purposes of the battle phase
 

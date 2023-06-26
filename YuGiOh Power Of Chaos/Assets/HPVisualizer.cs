@@ -6,6 +6,7 @@ using UnityEngine;
 public class HPVisualizer : MonoBehaviour
 {
     public GameObject visualizer;
+    public Player player;
 
     float maxHeight = -5.0f; //Full HP
     //float minHeight = -55.0f; //No HP
@@ -13,7 +14,12 @@ public class HPVisualizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //Get player based on game object name
+        string name = gameObject.GetComponentInParent<Transform>().name;
+        if (name.Split("_")[0] == "p1")
+            player = Globals.p1;
+        else
+            player = Globals.cpu;
     }
 
     //TODO: Save the previous HP, if its lower, then change the type of animation
@@ -29,7 +35,7 @@ public class HPVisualizer : MonoBehaviour
 
     void UpdateHPLevel()
     {
-        int health = Globals.cpu.Health > 8000 ? 8000 : Globals.cpu.Health;
+        int health = player.Health > 8000 ? 8000 : player.Health;
         float fraction = (int)(45 * (health / 8000.0f));
         float height = maxHeight - (45 - fraction);
 

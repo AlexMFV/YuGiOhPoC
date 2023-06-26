@@ -35,7 +35,22 @@ namespace Assets.Scripts
         {
             return _cardsInHand;
         }
-        
+
+        public Card GetHighestAttackCard()
+        {
+            return _cardsInHand.Where(x => x._cardType == "monster").OrderByDescending(x => x._attack).FirstOrDefault();
+        }
+
+        public Card GetHighestDefenseCard()
+        {
+            return _cardsInHand.Where(x => x._cardType == "monster").OrderByDescending(x => x._defense).FirstOrDefault();
+        }
+
+        public Card GetHighestValueSpellCard()
+        {
+
+        }
+
         public void Discard(Guid id)
         {
             _cardsInHand.RemoveAll(x => x._id == id);

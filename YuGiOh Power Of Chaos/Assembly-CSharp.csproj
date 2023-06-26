@@ -77,11 +77,11 @@
     <Compile Include="Assets\Scripts\MovementQueue.cs" />
     <Compile Include="Assets\AnimateCursorClick.cs" />
     <Compile Include="Assets\Scripts\GameAnimator.cs" />
+    <Compile Include="Assets\HPVisualizer.cs" />
     <Compile Include="Assets\Scripts\CursorManager.cs" />
     <Compile Include="Assets\Scripts\GameTimer.cs" />
     <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
-    <Compile Include="Assets\HPVisualizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
