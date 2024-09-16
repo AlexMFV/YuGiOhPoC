@@ -46,10 +46,10 @@ namespace Assets.Scripts
             return _cardsInHand.Where(x => x._cardType == "monster").OrderByDescending(x => x._defense).FirstOrDefault();
         }
 
-        public Card GetHighestValueSpellCard()
-        {
-
-        }
+        //public Card GetHighestValueSpellCard()
+        //{
+        //
+        //}
 
         public void Discard(Guid id)
         {

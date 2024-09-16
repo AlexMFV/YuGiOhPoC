@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     static bool firstRun = true;
     static bool debug = true;
+    static bool playMusic = false;
 
     static bool isAttackSelected = false;
     static GameObject attackSelected;
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
         //^^^^^^^^ TEMPORARY^^^^^^^^
 
         //Preload the player Decks
-        //This can be done from a fileinside the player computer
+        //This can be done from a file inside the player computer
         //or if an accoutn system is implemented, use the default deck instead
         Globals.p1.LoadDeck();
         Globals.cpu.LoadDeck();
@@ -89,10 +90,15 @@ public class GameManager : MonoBehaviour
             sound.StartGame();
             System.Random r = new System.Random();
             int i = r.Next(0, 2);
-            if(i == 0)
-                sound.Stage1Music();
-            else
-                sound.Stage2Music();
+
+            if (playMusic)
+            {
+                if (i == 0)
+                    sound.Stage1Music();
+                else
+                    sound.Stage2Music();
+            }
+
             //timer.Wait(1000);
             //Show all card spots
             //foreach (Transform t in board.allpositions)
@@ -334,6 +340,7 @@ public class GameManager : MonoBehaviour
                 if (cpuCard._cardType != "spell" && cpuCard._cardType != "trap")
                 {
                     cpuCard._faceup = true;
+                    cpuCard.canBeAttacked = true;
                     Globals.canPlayCard = false;
                 }
 
@@ -385,17 +392,7 @@ public class GameManager : MonoBehaviour
         {
             //if this card has flag canAttack, spawn the attack_vector prefab on top of it
             if (c.canAttack)
-            {
-                //Spawn attack vector
-                GameObject attacker = Instantiate(attackVectorObj, c.Object.transform.position, Quaternion.identity);
-                attacker.transform.SetParent(c.Object.transform);
-                attacker.transform.localPosition = new Vector3(0, 0, 0);
-                attacker.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
-                attacker.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                attacker.GetComponent<AttackCard>().parent = c.Object; //Append the parent to a new variable
-                attacker.GetComponent<AttackCard>().card_ref = c; //Append the parent to a new variable
-                attackObjs.Add(attacker);
-            }
+                SpawnAttackBlade(c);
         }
 
         Globals.currentPhase = GamePhase.BP_BattleStep;
@@ -433,7 +430,7 @@ public class GameManager : MonoBehaviour
         {
             if(Globals.hitCard != null)
             {
-                if (Globals.hitCard.Object != attackSelected.GetComponent<AttackCard>().parent && !curr_player.CardBelongsToPlayer(Globals.hitCard._id))
+                if (Globals.hitCard.Object != attackSelected.GetComponent<AttackCard>().parent && !curr_player.CardBelongsToPlayer(Globals.hitCard._id) && Globals.hitCard.canBeAttacked)
                 {
                     attackSelected.GetComponent<AttackCard>().isAttacking = true;
                     attackSelected.GetComponent<AttackCard>().target = Globals.hitCard.Object;
@@ -481,8 +478,8 @@ public class GameManager : MonoBehaviour
             damageControl = 0;
             //Should play shield animation on attacked card
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
-            //The attack vector prefab needs to be cleaned
             Globals.currentPhase = GamePhase.BP_BattleStep;
+            Destroy(attackSelected); //Clean the attack vector prefab
             timer.Wait(1500);
             return;
         }
@@ -495,6 +492,7 @@ public class GameManager : MonoBehaviour
             hit.Kill(Globals.cpu);//Kill the attacked card
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
             Globals.currentPhase = GamePhase.BP_BattleStep; //Not needed as we already are in the battle step
+            Destroy(attackSelected); //Clean the attack vector prefab
             sound.TakeDamage();
             timer.Wait(1500);
             return;
@@ -502,12 +500,13 @@ public class GameManager : MonoBehaviour
 
         if (sourceHP < hitHP)
         {
-            damageControl = hitHP - sourceHP;
+            damageControl = (hitHP - sourceHP) * -1;
             Globals.p1.TakeDamage(damageControl);
 
             //The attacking card is not killed, the player simply loses HP
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
             Globals.currentPhase = GamePhase.BP_BattleStep;
+            Destroy(attackSelected); //Clean the attack vector prefab
             sound.TakeDamage();
             timer.Wait(1500);
             return;
@@ -527,7 +526,9 @@ public class GameManager : MonoBehaviour
 
     void MainPhase2()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        //Temporary skip for CPU
+
+        if (Input.GetKeyDown(KeyCode.N) || curr_player == Globals.cpu)
             Globals.currentPhase = GamePhase.EndPhase;
     }
     
@@ -554,4 +555,21 @@ public class GameManager : MonoBehaviour
             //Player 1 wins
         }
     }
+
+    #region Other Methods
+
+    public void SpawnAttackBlade(Card card)
+    {
+        //Spawn attack vector
+        GameObject attacker = Instantiate(attackVectorObj, card.Object.transform.position, Quaternion.identity);
+        attacker.transform.SetParent(card.Object.transform);
+        attacker.transform.localPosition = new Vector3(0, 0, 0);
+        attacker.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+        attacker.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        attacker.GetComponent<AttackCard>().parent = card.Object; //Append the parent to a new variable
+        attacker.GetComponent<AttackCard>().card_ref = card; //Append the parent to a new variable
+        attackObjs.Add(attacker);
+    }
+
+    #endregion
 }

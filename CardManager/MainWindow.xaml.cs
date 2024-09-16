@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -14,7 +15,7 @@ namespace CardManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Card> cards;
+        ObservableCollection<Card> cards;
         List<BitmapImage> images;
 
         public MainWindow()
@@ -48,26 +49,28 @@ namespace CardManager
 
         public void FillList()
         {
-            foreach (Card card in cards)
-            {
-                System.Windows.Controls.ListViewItem item = new System.Windows.Controls.ListViewItem();
-                item.Content = card._name;
-                item.Tag = card._id;
-                //item.MouseDoubleClick += Item_MouseDoubleClick;
-                lstCards.Items.Add(item);
-            }
+            dgCards.ItemsSource = cards;
+            //dgCards.DataContext = cards;
 
-            if(lstCards.Items.Count > 0)
-                lstCards.SelectedIndex = 0;
+            //foreach (Card card in cards)
+            //{
+            //    System.Windows.Controls.ListViewItem item = new System.Windows.Controls.ListViewItem();
+            //    item.Content = card._name;
+            //    item.Tag = card._id;
+            //    //item.MouseDoubleClick += Item_MouseDoubleClick;
+            //    lstCards.Items.Add(item);
+            //}
+            //
+            //if(lstCards.Items.Count > 0)
+            //    lstCards.SelectedIndex = 0;
         }
 
         private void lstCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            System.Windows.Controls.ListViewItem item = (System.Windows.Controls.ListViewItem)lstCards.SelectedItem;
-            
-            if (item != null && item.Tag != null)
+            Card card = (Card)dgCards.SelectedItem;
+
+            if (card != null)
             {
-                Card card = Card.GetCardByID(cards, (Guid)item.Tag);
                 BitmapImage image = images.Where(x => x.UriSource.Segments.Last().Split('.')[0] == card._imageName).First();
                 imgCard.Source = image;
             }

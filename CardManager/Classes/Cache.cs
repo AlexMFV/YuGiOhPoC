@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using System.Collections.ObjectModel;
 
 namespace CardManager
 {
@@ -39,14 +40,14 @@ namespace CardManager
             return "";
         }
 
-        public static List<Card> LoadAllCards()
+        public static ObservableCollection<Card> LoadAllCards()
         {
-            List<Card> cards = new List<Card>();
+            ObservableCollection<Card> cards = new ObservableCollection<Card>();
 
             if (Globals.files_path != "" && File.Exists(Path.Combine(Globals.files_path, "all_cards.json")))
             {
                 string json = File.ReadAllText(Path.Combine(Globals.files_path, "all_cards.json"));
-                cards = JsonConvert.DeserializeObject<List<Card>>(json);
+                cards = JsonConvert.DeserializeObject<ObservableCollection<Card>>(json);
             }
 
             return cards;

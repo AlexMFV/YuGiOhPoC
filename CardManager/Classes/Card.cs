@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +20,15 @@ namespace CardManager
         [JsonProperty("card_id")]
         public int _cardId; //id associates with the defacto card (image, etc)
         [JsonProperty("name")]
-        public string _name;
+        public string _name { get; set; }
         [JsonProperty("description")]
         public string _description;
         [JsonProperty("attack")]
-        public int _attack;
+        public int _attack { get; set; }
         [JsonProperty("defense")]
-        public int _defense;
+        public int _defense { get; set; }
         [JsonProperty("level")]
-        public int _starRating;
+        public int _starRating { get; set; }
         [JsonProperty("card_type")]
         public string _cardType;
         //public CardType _cardType;
@@ -100,7 +101,7 @@ namespace CardManager
                 return _defense;
         }
 
-        public static Card GetCardByID(List<Card> cards, Guid id)
+        public static Card GetCardByID(IEnumerable<Card> cards, Guid id)
         {
             return cards.Where(x => x._id == id).FirstOrDefault();
         }

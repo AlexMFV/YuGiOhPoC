@@ -7,7 +7,16 @@
         mc:Ignorable="d"
         Title="Card Manager v0.1" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="lstCards" SelectionChanged="lstCards_SelectionChanged" Margin="10,10,0,46" Width="300" HorizontalAlignment="Left"/>
-        <Image x:Name="imgCard" Margin="320,10,230,46"/>
+        <!--<ListView x:Name="lstCards" SelectionChanged="lstCards_SelectionChanged" Margin="10,10,0,46" Width="300" HorizontalAlignment="Left"/>-->
+        <DataGrid x:Name="dgCards" Margin="10,10,300,10" AlternatingRowBackground="AliceBlue" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" SelectionChanged="lstCards_SelectionChanged" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Path=cards, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=_name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Attack" Binding="{Binding Path=_attack, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Defense" Binding="{Binding Path=_defense, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Rating" Binding="{Binding Path=_starRating, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Type" Width="75" Binding="{Binding Path=_card_type, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Image x:Name="imgCard" Margin="525,28,25,28"/>
     </Grid>
 </Window>

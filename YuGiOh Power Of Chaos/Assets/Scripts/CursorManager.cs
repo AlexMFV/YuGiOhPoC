@@ -127,6 +127,13 @@ public class CursorManager : MonoBehaviour
     //Changes the cursor 
     public void CursorCardHover()
     {
+        //Check if the targetted card belongs to the CPU and is no faceup (if so we show the default cursor)
+        if(!Globals.hitCard._faceup || !Globals.p1_cards.TryGetValue(Globals.hitCard._id, out Card x))
+        {
+            Cursor.SetCursor(c_default, offset, CursorMode.ForceSoftware);
+            return;
+        }
+
         if (Globals.canPlayCard)
         {
             if (!Globals.hitCard.isSet)

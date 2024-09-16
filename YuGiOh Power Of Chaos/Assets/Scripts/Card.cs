@@ -49,6 +49,7 @@ namespace Assets.Scripts
         public PlayType _playType;
         public bool isSet;
         public bool canAttack;
+        public bool canBeAttacked;
 
         public Card(int cardId, GameObject prefab)
         {
