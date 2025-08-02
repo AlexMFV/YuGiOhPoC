@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     static bool firstRun = true;
     static bool debug = true;
-    static bool playMusic = false;
+    static bool playMusic = true;
 
     static bool isAttackSelected = false;
     static GameObject attackSelected;
@@ -352,7 +352,9 @@ public class GameManager : MonoBehaviour
                 timer.Wait(1000); //Between each card pause the game either to give time to the player to process and/or to play animations/sounds
             }
             else
-                Globals.currentPhase = GamePhase.MainPhase2;
+                //Instead of jumping right to the battle phase we need to check if the bot can attack, this means that the both has atleast one card that
+                //has higher attack than enemy attack, of if there is a card facedown.
+                Globals.currentPhase = GamePhase.BattlePhase; //MainPhase2
         }
     }
 
@@ -398,8 +400,44 @@ public class GameManager : MonoBehaviour
         Globals.currentPhase = GamePhase.BP_BattleStep;
     }
 
+    void BotAttack()
+    {
+        //Check if there are cards that can be attacked, if there are we attack, otherwise we go to the next phase
+        //There are also some conditions where the bot pushed the card into defense mode
+
+        //Usually the attacks are from the lowest card to the biggest attack value
+        Dictionary<Guid, Card> targets = (Dictionary<Guid, Card>)Globals.p1_cards.Where(x => x.Value._cardType == "monster");
+        Dictionary<Guid, Card> attackers = (Dictionary<Guid, Card>)Globals.cpu_cards.Where(x => x.Value.canAttack);
+
+        bool hasAttacksLeft = Globals.cpu_cards.Any(x => x.Value.canAttack); //If there is atleas one card that can attack
+        bool hasTarget = false;
+
+        bool test = attackers.Any(a => targets.Any(t => t.Value.GetPrimaryValue() < a.Value._attack)); //Test single line, this is maybe the same as the following loop
+
+        foreach(Card c in attackers.Values)
+        {
+            if(targets.Any(x => x.Value.GetPrimaryValue() < c._attack))
+            {
+                hasTarget = true;
+                break;
+            }
+        }
+
+        if (!(hasAttacksLeft && hasTarget))
+        {
+            Globals.currentPhase = GamePhase.MainPhase2;
+            return;
+        }
+
+        //Process which cards can attack which
+    }
+
     void BattleStep()
     {
+        if (curr_player == Globals.cpu)
+            BotAttack();
+
+
         if (Input.GetKeyDown(KeyCode.N))
             Globals.currentPhase = GamePhase.BP_EndStep;
 
