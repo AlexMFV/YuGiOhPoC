@@ -518,7 +518,6 @@ public class GameManager : MonoBehaviour
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
             Globals.currentPhase = GamePhase.BP_BattleStep;
             Destroy(attackSelected); //Clean the attack vector prefab
-            timer.Wait(1500);
             return;
         }
 
@@ -532,7 +531,6 @@ public class GameManager : MonoBehaviour
             Globals.currentPhase = GamePhase.BP_BattleStep; //Not needed as we already are in the battle step
             Destroy(attackSelected); //Clean the attack vector prefab
             sound.TakeDamage();
-            timer.Wait(1500);
             return;
         }
 
@@ -546,7 +544,6 @@ public class GameManager : MonoBehaviour
             Globals.currentPhase = GamePhase.BP_BattleStep;
             Destroy(attackSelected); //Clean the attack vector prefab
             sound.TakeDamage();
-            timer.Wait(1500);
             return;
         }
     }
