@@ -1,0 +1,402 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|c:\\users\\alex\\desktop\\repos\\yugiohpoc\\yugioh power of chaos\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\gamephase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamephase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\handmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\handmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\attackcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\attackcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\gametimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gametimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\cursormanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cursormanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\hpvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\hpvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\soundmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\soundmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\boardmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\boardmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\cacheparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cacheparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\spritemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spritemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\textmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\textmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\CardManager\\Classes\\Cache.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\playtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\gameanimator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gameanimator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\movementqueue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\movementqueue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\assets\\scripts\\movementtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6E68C77-854E-4BB7-140F-EF023BF6CA05}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\movementtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 314,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
+              "ViewState": "AgIAAF4BAAAAAAAAAAAQwHcBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-02-06T23:18:50.676Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Card.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Card.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Card.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Card.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Card.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAmwC8AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-02-06T23:18:50.673Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Globals.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Globals.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Globals.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Globals.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Globals.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-02-12T19:01:39.097Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "MovementQueue.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\MovementQueue.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MovementQueue.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\MovementQueue.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MovementQueue.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-06-04T16:40:03.209Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Movement.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Movement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Movement.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Movement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Movement.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-06-04T16:40:02.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CacheParser.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\CacheParser.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CacheParser.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\CacheParser.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CacheParser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-03-06T00:21:42.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Cache.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\CardManager\\Classes\\Cache.cs",
+              "RelativeDocumentMoniker": "..\\CardManager\\Classes\\Cache.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\CardManager\\Classes\\Cache.cs",
+              "RelativeToolTip": "..\\CardManager\\Classes\\Cache.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-06-26T00:53:25.542Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "BoardManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\BoardManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BoardManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\BoardManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BoardManager.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-06-04T16:39:40.221Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Player.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Player.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Player.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAmwBkAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-02-06T23:18:50.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Helpers.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Helpers.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Helpers.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Helpers.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Helpers.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAYwBMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-03-04T02:07:31.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HPVisualizer.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\HPVisualizer.cs",
+              "RelativeDocumentMoniker": "Assets\\HPVisualizer.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\HPVisualizer.cs",
+              "RelativeToolTip": "Assets\\HPVisualizer.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAwwCUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-06-24T02:42:07.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Hand.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Hand.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Hand.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\Hand.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Hand.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAqwDUAAAAbAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-06-25T15:25:19.103Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CursorManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\CursorManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CursorManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\CursorManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CursorManager.cs",
+              "ViewState": "AgIAALEAAAAAAAAAAAAwwM8AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-02-27T11:49:13.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GamePhase.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GamePhase.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GamePhase.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GamePhase.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GamePhase.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwBAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-06-04T16:40:48.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AttackCard.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\AttackCard.cs",
+              "RelativeDocumentMoniker": "Assets\\AttackCard.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\AttackCard.cs",
+              "RelativeToolTip": "Assets\\AttackCard.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAowEcAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-03-11T00:54:43.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GameTimer.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GameTimer.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameTimer.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GameTimer.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameTimer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-06-04T16:40:46.178Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "SpriteManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\SpriteManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SpriteManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\SpriteManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SpriteManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAApAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-06-04T16:40:15.758Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SoundManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\SoundManager.cs",
+              "RelativeDocumentMoniker": "Assets\\SoundManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\SoundManager.cs",
+              "RelativeToolTip": "Assets\\SoundManager.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAADQAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-06-17T21:44:39.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "PlayType.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\PlayType.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayType.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\PlayType.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayType.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAYAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-06-04T16:40:16.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HandManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\HandManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\HandManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\HandManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\HandManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2023-02-06T23:18:50.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "MovementType.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\MovementType.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MovementType.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\MovementType.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MovementType.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAATAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-06-04T16:40:04.253Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TextManager.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\TextManager.cs",
+              "RelativeDocumentMoniker": "Assets\\TextManager.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\TextManager.cs",
+              "RelativeToolTip": "Assets\\TextManager.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAxwBAAAAAAAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-02-28T15:07:17.281Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "GameAnimator.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GameAnimator.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameAnimator.cs",
+              "ToolTip": "C:\\Users\\Alex\\Desktop\\Repos\\YuGiOhPoC\\YuGiOh Power Of Chaos\\Assets\\Scripts\\GameAnimator.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameAnimator.cs",
+              "ViewState": "AQIAAGEAAAAAAAAAAAD4v3kAAAAAAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVDhP7Y8xSwJxGMZ/5/GPkAM/QTiccI5xUG65ieAUgv4dXMTBLxFEtTm4CC1RRPUtHFvERW7I5RqyIZBuEG5S5G0o/4hER7u/6YHn4XmfF3YYxm9jad43xbvyxL1wpXHXkLUXzSPJXeZkWwNYAME0kPpjncJBgdZxi8x\u002Bhslsgj7SVjSPxO/567xB2YrwLLQAaD\u002B1pXJdkTiOTfMmfy1IAYzeR5S8Eo7jfDf\u002BgxTAYrVA2Wrbg5\u002BLfs9nuVqSPc8avbmC2m1NqjfVX\u002BeT8IIFMHwdin7QlPNl9KFG2YrgI6Bz0kl8yQQGLwPpP/cJP0PSe2mKbpHuaTexYAd8AREpdKtYXY\u002BXAAAAAElFTkSuQmCC",
+              "WhenOpened": "2023-02-12T22:36:00.474Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

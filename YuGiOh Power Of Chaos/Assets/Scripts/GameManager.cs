@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     static GameObject attackSelected;
     static List<GameObject> attackObjs;
 
+    public static Guid bot_attacker;
+    public static Guid bot_target;
+
     public static SoundManager sound;
     static GameObject phaseObj;
     static GameObject deckCountObj;
@@ -44,6 +47,9 @@ public class GameManager : MonoBehaviour
         board = new BoardManager();
         timer = new GameTimer();
         attackObjs = new List<GameObject>();
+
+        bot_attacker = Guid.Empty;
+        bot_target = Guid.Empty;
 
         //This should be done once the game is started and is loading
         CacheParser.ParseCards(); //Loads all the cards in the game
@@ -350,10 +356,11 @@ public class GameManager : MonoBehaviour
                 HandManager.ArrangeHand(Globals.cpu);
 
                 timer.Wait(1000); //Between each card pause the game either to give time to the player to process and/or to play animations/sounds
-            }
+            }            
             else
                 //Instead of jumping right to the battle phase we need to check if the bot can attack, this means that the both has atleast one card that
                 //has higher attack than enemy attack, of if there is a card facedown.
+                //TODO: For now just jump to battle phase
                 Globals.currentPhase = GamePhase.BattlePhase; //MainPhase2
         }
     }
@@ -378,7 +385,7 @@ public class GameManager : MonoBehaviour
         //Not flipped down
         //Show attack indicator on top of each card
 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (curr_player == Globals.cpu || Input.GetKeyDown(KeyCode.N))
         {
             sound.BattlePhase();
             Globals.currentPhase = GamePhase.BP_StartStep;
@@ -405,29 +412,92 @@ public class GameManager : MonoBehaviour
         //Check if there are cards that can be attacked, if there are we attack, otherwise we go to the next phase
         //There are also some conditions where the bot pushed the card into defense mode
 
-        //Usually the attacks are from the lowest card to the biggest attack value
-        Dictionary<Guid, Card> targets = (Dictionary<Guid, Card>)Globals.p1_cards.Where(x => x.Value._cardType == "monster");
-        Dictionary<Guid, Card> attackers = (Dictionary<Guid, Card>)Globals.cpu_cards.Where(x => x.Value.canAttack);
+        //For now we can just prioritize attacks to the face down cards, randomly
+        //if there are no cards face down, validate if there are cards we can attack (face up)
+        //If we do, we attack them, otherwise put card in defense position
+        //Finally if there are no cards in board, attack player directly.
 
-        bool hasAttacksLeft = Globals.cpu_cards.Any(x => x.Value.canAttack); //If there is atleas one card that can attack
-        bool hasTarget = false;
 
-        bool test = attackers.Any(a => targets.Any(t => t.Value.GetPrimaryValue() < a.Value._attack)); //Test single line, this is maybe the same as the following loop
-
-        foreach(Card c in attackers.Values)
+        //Only run this if there is no planned attack and target (meaning we can process a new one)
+        if (bot_attacker == Guid.Empty && bot_target == Guid.Empty)
         {
-            if(targets.Any(x => x.Value.GetPrimaryValue() < c._attack))
+            //Usually the attacks are from the lowest card to the biggest attack value
+            Dictionary<Guid, Card> targets = Globals.p1.GetMonsterZone().Where(x => x._cardType == "monster").ToDictionary(x => x._id, x => x);
+            Dictionary<Guid, Card> attackers = Globals.cpu_cards.Where(x => x.Value.canAttack).ToDictionary(x => x.Key, x => x.Value);
+
+            if(attackers.Count == 0)
             {
-                hasTarget = true;
-                break;
+                Globals.currentPhase = GamePhase.MainPhase2;
+                return;
+            }
+
+            bool hasAttacksLeft = Globals.cpu_cards.Any(x => x.Value.canAttack); //If there is atleas one card that can attack
+
+            bool hasFaceUpAttack = attackers.Any(a => targets.Any(t => t.Value.GetPrimaryValue() < a.Value._attack && t.Value._faceup)); //Test single line, this is maybe the same as the following loop
+            bool hasFaceDownAttack = targets.Any(t => t.Value._faceup == false); //Test single line, this is maybe the same as the following loop
+
+            if (hasFaceDownAttack)
+            {
+                try
+                {
+                    //Get lowest attack card that can attack
+                    bot_attacker = attackers.Where(x => x.Value.canAttack).OrderBy(x => x.Value._attack).First().Key;
+                    //Get random facedown card
+                    bot_target = targets.Where(x => x.Value._faceup == false).OrderBy(x => Guid.NewGuid()).First().Key;
+
+                    Card cardObj;
+                    if (attackers.TryGetValue(bot_attacker, out cardObj))
+                    {
+                        cardObj.canAttack = false; //Use up the attack for this card
+                        GameObject cardPrefab = cardObj.Object;
+                        AttackCard attackingCard = cardPrefab.GetComponentsInChildren<AttackCard>().First();
+                        attackSelected = attackingCard.gameObject;
+
+                        if (cardPrefab != null)
+                        {
+                            attackingCard.isAttacking = true;
+                            attackingCard.isSelected = true;
+                            attackingCard.target = targets[bot_target].Object;
+                        }
+                    }
+
+                    Globals.permanentHitCard = targets[bot_target];
+                    timer.Wait(1500);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("BotAttack FaceDown Exception: " + ex.Message);
+                    bot_attacker = Guid.Empty;
+                    bot_target = Guid.Empty;
+                }
+                return;
+            }
+
+            if (hasFaceUpAttack)
+            {
+
             }
         }
 
-        if (!(hasAttacksLeft && hasTarget))
-        {
-            Globals.currentPhase = GamePhase.MainPhase2;
-            return;
-        }
+        //if (hasFaceUpAttack)
+        //{
+        //    //Get the card and attack it, choose a card that has the highest damage potential
+        //    targets = targets.Where(x => x.Value.GetPrimaryValue() < attackers.Values.Max(y => y._attack) && x.Value._faceup).ToDictionary(x => x.Key, x => x.Value);
+        //}
+        //
+        //if (hasFaceDownAttack)
+        //{
+        //    //Get the card and attack it, choose a random one
+        //}
+
+        //If not any of these, then put cards in defense mode, MAYBE?? 
+        //If there are no monsters in the field, attack player directly
+
+        //if (!(hasAttacksLeft && hasTarget))
+        //{
+        //    Globals.currentPhase = GamePhase.MainPhase2;
+        //    return;
+        //}
 
         //Process which cards can attack which
     }
@@ -435,7 +505,10 @@ public class GameManager : MonoBehaviour
     void BattleStep()
     {
         if (curr_player == Globals.cpu)
+        {
             BotAttack();
+            return;
+        }
 
 
         if (Input.GetKeyDown(KeyCode.N))
@@ -499,10 +572,10 @@ public class GameManager : MonoBehaviour
         //sound.AttackCard();
 
         //We attack and play the attack sound, after that we wait 1/2 seconds and then the damage label is shown
-        DamageResolver(source, hit);
+        DamageResolver(curr_player, source, hit);
     }
 
-    void DamageResolver(Card source, Card hit)
+    void DamageResolver(Player attacker, Card source, Card hit)
     {
         if(source == null || hit == null)
             throw new Exception("Source or hit card is null");
@@ -525,9 +598,18 @@ public class GameManager : MonoBehaviour
         if(sourceHP > hitHP)
         {
             damageControl = (sourceHP - hitHP) * -1;
-            Globals.cpu.TakeDamage(damageControl);
 
-            hit.Kill(Globals.cpu);//Kill the attacked card
+            if (curr_player == Globals.p1)
+            {
+                Globals.cpu.TakeDamage(damageControl);
+                hit.Kill(Globals.cpu);//Kill the attacked card
+            }
+            else
+            {
+                Globals.p1.TakeDamage(damageControl);
+                hit.Kill(Globals.p1);//Kill the attacked card
+            }
+            
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
             Globals.currentPhase = GamePhase.BP_BattleStep; //Not needed as we already are in the battle step
             Destroy(attackSelected); //Clean the attack vector prefab
@@ -539,7 +621,11 @@ public class GameManager : MonoBehaviour
         if (sourceHP < hitHP)
         {
             damageControl = (hitHP - sourceHP) * -1;
-            Globals.p1.TakeDamage(damageControl);
+
+            if (curr_player == Globals.p1)
+                Globals.p1.TakeDamage(damageControl);
+            else
+                Globals.cpu.TakeDamage(damageControl);
 
             //The attacking card is not killed, the player simply loses HP
             Globals.permanentHitCard = null; //Clear the card used for damage calculation
@@ -565,6 +651,8 @@ public class GameManager : MonoBehaviour
     void MainPhase2()
     {
         //Temporary skip for CPU
+        if(curr_player == Globals.cpu)
+            Globals.currentPhase = GamePhase.EndPhase;
 
         if (Input.GetKeyDown(KeyCode.N) || curr_player == Globals.cpu)
             Globals.currentPhase = GamePhase.EndPhase;

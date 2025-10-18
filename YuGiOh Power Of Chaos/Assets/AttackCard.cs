@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -34,60 +35,65 @@ public class AttackCard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hitTarget)
+        if(GameManager.shouldRun)
         {
-            if (isSelected)
+            if (!hitTarget)
             {
-                if (target == null)
+                if (isSelected)
                 {
-                    //Rotate 2d sprite to rotate and follow cursor
-                    LookAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                }
-                else
-                {
-                    if(target == parent)
-                        target = null;
-
-                    if (!processedTarget)
+                    if (target == null)
                     {
-                        LookAt(target.transform.position);
-                        processedTarget = true;
+                        //Rotate 2d sprite to rotate and follow cursor
+                        LookAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     }
-                    
-                    if (processedTarget)
+                    else
                     {
-                        if (isAttacking)
+                        if (target == parent)
+                            target = null;
+
+                        if (!processedTarget)
                         {
-                            //Move forward with exponential speed until it reaches the target position
-                            float step = speed * Time.deltaTime;
-                            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
+                            LookAt(target.transform.position);
+                            processedTarget = true;
+                        }
 
-                            //TODO: This is fucked, we calculate a small distance between both vectors to allow the sound to play before
-                            //the vectors meet. This is because if we play the sound ONLY when they meet the sound will be delayed.
-                            if (!playedSound && Vector3.Distance(transform.position, target.transform.position) < 15f)
+                        if (processedTarget)
+                        {
+                            if (isAttacking)
                             {
-                                playedSound = true;
-                                GameManager.sound.AttackCard();
-                            }
+                                //Move forward with exponential speed until it reaches the target position
+                                float step = speed * Time.deltaTime;
+                                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
 
-                            if (transform.position == target.transform.position)
-                            {
-                                playedSound = false;
-                                hitTarget = true;
-                                isAttacking = false;
-                                isSelected = false;
-                                this.transform.SetParent(target.transform);
-                                this.GetComponent<SpriteRenderer>().sprite = final_sprite;
-                                Globals.currentPhase = GamePhase.BP_DamageStep;
-                                GameManager.timer.Wait(1500);
+                                //TODO: This is fucked, we calculate a small distance between both vectors to allow the sound to play before
+                                //the vectors meet. This is because if we play the sound ONLY when they meet the sound will be delayed.
+                                if (!playedSound && Vector3.Distance(transform.position, target.transform.position) < 15f)
+                                {
+                                    playedSound = true;
+                                    GameManager.sound.AttackCard();
+                                }
+
+                                if (transform.position == target.transform.position)
+                                {
+                                    playedSound = false;
+                                    hitTarget = true;
+                                    isAttacking = false;
+                                    isSelected = false;
+                                    GameManager.bot_attacker = Guid.Empty;
+                                    GameManager.bot_target = Guid.Empty;
+                                    this.transform.SetParent(target.transform);
+                                    this.GetComponent<SpriteRenderer>().sprite = final_sprite;
+                                    Globals.currentPhase = GamePhase.BP_DamageStep;
+                                    GameManager.timer.Wait(1500);
+                                }
+                                speed *= increase;
                             }
-                            speed *= increase;
                         }
                     }
                 }
+                else
+                    this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
-            else
-                this.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
